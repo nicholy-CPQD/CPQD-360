@@ -128,10 +128,11 @@
             background-color: #00BFA5;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
+            font-size: 14px;
         }
 
         @keyframes fadeIn {
@@ -142,12 +143,15 @@
 </head>
 <body>
 
+    <!-- IFRAME OCULTO PARA RECEBER A RESPOSTA DO GOOGLE SEM RECARREGAR A PÁGINA -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { showSuccessModal(); }"></iframe>
+
     <div class="form-container">
         <h1>Entre em Contato</h1>
         <p>Quer compartilhar algo conosco? Preencha o formulário abaixo.</p>
 
-        <!-- SUBMIT INTERCEPTADO VIA JAVASCRIPT -->
-        <form id="feedbackForm" action="https://script.google.com/a/macros/cpqd.com.br/s/AKfycbygdDjvnPZEvGytcTIodQyevFv59VD6e3-CmrMZgJrIBMgYpBnCySLfu-ehUGzloMzSpQ/exec" method="POST">
+        <!-- SUBMIT DIRECIONADO PARA O IFRAME OCULTO -->
+        <form id="feedbackForm" action="https://script.google.com/a/macros/cpqd.com.br/s/AKfycbyOE9tB6pxThtfxHYi4LF42sbri69fXdZA8i3UZBlTEV8pIYf1Lv2pQkNxt3ZUedWWzcw/exec" method="POST" target="hidden_iframe" onsubmit="submitted=true;">
             <div class="form-group">
                 <label for="nome">Nome Completo</label>
                 <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
@@ -173,52 +177,36 @@
     <div class="modal-overlay" id="successModal">
         <div class="modal-card">
             <h3>Mensagem Enviada!</h3>
-            <p>Obrigado pelo seu feedback. Nossa equipe irá analisar a sua contribuição.</p>
-            <button class="modal-btn" onclick="closeModal()">Fechar</button>
+            <p>Obrigado pelo seu feedback. Sua mensagem foi salva com sucesso e nossa equipe irá analisá-la.</p>
+            <button class="modal-btn" onclick="redirectToMap()">Voltar para o Mapa</button>
         </div>
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/a/macros/cpqd.com.br/s/AKfycbygdDjvnPZEvGytcTIodQyevFv59VD6e3-CmrMZgJrIBMgYpBnCySLfu-ehUGzloMzSpQ/exec";
+        var submitted = false;
 
-        const form = document.getElementById('feedbackForm');
-        const modal = document.getElementById('successModal');
-        const btnSubmit = document.getElementById('btnSubmit');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            btnSubmit.innerText = "Enviando...";
-            btnSubmit.disabled = true;
-
-            const formData = new FormData(form);
-
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors'
-            })
-            .then(() => {
-                modal.style.display = 'flex';
-                form.reset();
-            })
-            .catch(err => {
-                alert("Ocorreu um erro ao enviar. Tente novamente.");
-            })
-            .finally(() => {
-                btnSubmit.innerText = "Enviar Mensagem";
-                btnSubmit.disabled = false;
-            });
-        });
-
-        function closeModal() {
-            modal.style.display = 'none';
+        function showSuccessModal() {
+            // Exibe o modal de sucesso na tela
+            document.getElementById('successModal').style.display = 'flex';
+            document.getElementById('feedbackForm').reset();
+            
+            // Restaura o botão
+            const btn = document.getElementById('btnSubmit');
+            btn.innerText = "Enviar Mensagem";
+            btn.disabled = false;
         }
-// Agora o formulário envia nativamente via POST sem depender de JS complexo
-    const modal = document.getElementById('successModal');
 
-    function closeModal() {
-        modal.style.display = 'none';
-    }
-</script>
+        // Função chamada ao clicar em "Voltar para o Mapa" no modal
+        function redirectToMap() {
+            window.location.href = "index.html";
+        }
+
+        // Altera o texto do botão para "Enviando..." no momento do clique
+        document.getElementById('feedbackForm').addEventListener('submit', function() {
+            const btn = document.getElementById('btnSubmit');
+            btn.innerText = "Enviando...";
+            btn.disabled = true;
+        });
+    </script>
 </body>
 </html>
