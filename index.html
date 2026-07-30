@@ -14,44 +14,40 @@
 <!-- PRIMEIRA PÁGINA (ONBOARDING) -->
 <header class="main-header">
     <div class="header-content">
-        <!-- LOGO CPQD -->
         <a href="index.html" class="logo-link">
             <img src="img/logo-cpqd.png" alt="Logo CPQD" class="logo-cpqd">
         </a>
 
-        <!-- NAVEGAÇÃO COMPACTA DO MENU (TODOS OS BOTÕES COM O MESMO ESTILO) -->
         <nav class="main-nav">
             <a href="#secao-mapa" class="nav-item">NOSSO JEITO DE SER E DE FAZER</a>
             <a href="#secao-mapa" class="nav-item">CRESCER COMO PROFISSIONAL</a>
             <a href="formulario.html" class="nav-item">COMPARTILHAR IDEIAS</a>
         </nav>
-
-        <!-- BUSCA ORIGINAL COM A LUPA E BORDAS -->
-        <div class="header-actions">
-            <div class="search-container" id="search-container">
-                <button class="search-btn" id="search-toggle-btn" aria-label="Buscar">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#55A630" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </button>
-                <input type="text" id="search-input" placeholder="Buscar prédio...">
-                <ul class="search-results-dropdown" id="search-results-list"></ul>
-            </div>
-        </div>
     </div>
 </header>
 
-<!-- 2. CONTEÚDO LOGO ABAIXO DO MENU -->
 <div class="top-section-wrapper">
     <section class="proto-header">
         <h1>Bússola da Jornada - CPQD 360</h1>
         <p class="subtitle">sua jornada interativa pelo campus</p>
     </section>
 
-    <!-- BANNER DA FOTO -->
     <div class="hero-banner-container">
         <div class="hero-banner"></div>
+    </div>
+
+    <!-- BUSCA EXPANSÍVEL NO ESPAÇO BRANCO (ANTES DO MAPA) -->
+    <div class="search-bar-row">
+        <div class="search-container" id="search-container">
+            <button class="search-btn" id="search-toggle-btn" aria-label="Buscar Prédio">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00796B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+            <input type="text" id="search-input" placeholder="Buscar prédio...">
+            <ul class="search-results-dropdown" id="search-results-list"></ul>
+        </div>
     </div>
 </div>
 
