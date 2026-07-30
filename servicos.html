@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPQD 360 - Serviços & Amenities</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: var(--cpqd-green-light, #e8f5e9);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header-page {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-page h1 {
+            color: #00796B;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header-page p {
+            color: #555;
+            font-size: 16px;
+        }
+
+        /* NAVEGAÇÃO POR CATEGORIAS (TABS / FILTROS) */
+        .category-title {
+            font-size: 20px;
+            color: #004D40;
+            border-bottom: 2px solid #00BFA5;
+            padding-bottom: 8px;
+            margin: 30px 0 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* GRID DE CARDS DOS SERVIÇOS */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* CARD DE CADA SERVIÇO */
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border: 1px solid #e0e0e0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .card-icon {
+            font-size: 28px;
+            background: #E0F2F1;
+            padding: 10px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-title h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #1a1a1a;
+        }
+
+        .card-title span {
+            font-size: 12px;
+            color: #00796B;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .card-body p {
+            font-size: 14px;
+            color: #666;
+            margin: 0 0 15px 0;
+            line-height: 1.4;
+        }
+
+        /* LISTA DE INFORMAÇÕES (HORÁRIO, CONTATO, ETC) */
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+            font-size: 13px;
+            color: #444;
+        }
+
+        .info-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .info-list strong {
+            color: #222;
+        }
+
+        /* BOTÃO DE AÇÃO/AGENDAMENTO */
+        .btn-action {
+            display: inline-block;
+            text-align: center;
+            background-color: #00BFA5;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .btn-action:hover {
+            background-color: #00897B;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            color: #00796B;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- BOTÃO VOLTAR -->
+        <div class="back-nav">
+            <a href="index.html" class="back-link">← Voltar para o CPQD 360</a>
+        </div>
+
+        <!-- CABEÇALHO -->
+        <div class="header-page">
+            <h1>Serviços & Amenities</h1>
+            <p>Conheça as opções de alimentação, esporte, bem-estar e convivência dentro do Pólis.</p>
+        </div>
+
+        <!-- SEÇÃO 1: ALIMENTAÇÃO -->
+        <div class="category-title">
+            <span>🍽️</span> Alimentação & Lanchonetes
+        </div>
+
+        <div class="services-grid">
+            <!-- RESTAURANTE CENTRAL -->
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="card-icon">🍲</div>
+                        <div class="card-title">
+                            <span>Restaurante</span>
+                            <h3>Restaurante Central Pólis</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Almoço self-service com grande variedade de saladas, pratos quentes e sobremesas.</p>
+                        <ul class="info-list">
+                            <li>🕒 <strong>Horário:</strong> 11h30 às 14h00 (Seg a Sex)</li>
+                            <li>📍 <strong>Local:</strong> Prédio Central de Convivência</li>
+                            <li>📞 <strong>Contato:</strong> Ramal 4000</li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="#" class="btn-action">Ver Cardápio do Dia</a>
+            </div>
+
+            <!-- CAFETERIA / LANCHONETE -->
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="card-icon">☕</div>
+                        <div class="card-title">
+                            <span>Cafeteria</span>
+                            <h3>Café & Lanches Pólis</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Cafés especiais, salgados, sucos naturais e lanches rápidos para o seu dia a dia.</p>
+                        <ul class="info-list">
+                            <li>🕒 <strong>Horário:</strong> 07h30 às 17h00 (Seg a Sex)</li>
+                            <li>📍 <strong>Local:</strong> Próximo ao Auditório</li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="#" class="btn-action">Fazer Pedido / Contato</a>
+            </div>
+        </div>
+
+        <!-- SEÇÃO 2: CLUBE & ESPORTES -->
+        <div class="category-title">
+            <span>⚽</span> Clube, Esportes & Lazer
+        </div>
+
+        <div class="services-grid">
+            <!-- ACADEMIA E CLUBE -->
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="card-icon">🏋️‍♂️</div>
+                        <div class="card-title">
+                            <span>Associação / Clube</span>
+                            <h3>Academia & Clube de Esportes</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Estrutura completa com musculação, aulas funcionais e vestiários estruturados.</p>
+                        <ul class="info-list">
+                            <li>🕒 <strong>Horário:</strong> 06h00 às 21h00 (Seg a Sex)</li>
+                            <li>📍 <strong>Local:</strong> Área do Clube</li>
+                            <li>📞 <strong>Secretaria:</strong> (19) 99999-9999</li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="#" class="btn-action">Agendar Avaliação / Matrícula</a>
+            </div>
+
+            <!-- QUADRAS E SOCIETY -->
+            <div class="card">
+                <div>
+                    <div class="card-header">
+                        <div class="card-icon">🎾</div>
+                        <div class="card-title">
+                            <span>Esportes</span>
+                            <h3>Quadras de Tênis & Futebol</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Quadras de tênis e campo society iluminado para uso dos colaboradores e associados.</p>
+                        <ul class="info-list">
+                            <li>🕒 <strong>Horário:</strong> 07h00 às 22h00</li>
+                            <li>⚠️ <strong>Reserva:</strong> Necessário agendamento prévio</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Exemplo de link direto de agendamento/WhatsApp -->
+                <a href="https://wa.me/5519999999999" target="_blank" class="btn-action">Agendar Quadra via WhatsApp</a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
