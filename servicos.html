@@ -6,17 +6,116 @@
     <title>CPQD 360 - Serviços & Amenities</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* 1º PONTO: FUNDO 100% BRANCO */
         body {
-            background-color: var(--cpqd-green-light, #e8f5e9);
+            background-color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
             color: #333;
         }
 
-        .container {
-            max-width: 1000px;
+        /* 2º PONTO: CABEÇALHO COM LOGO E NAVEGAÇÃO */
+        .main-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #E5E5E5;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0 30px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
             margin: 0 auto;
+            height: 65px;
+        }
+
+        .logo-cpqd {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        /* 3º PONTO: LUPA EXPANSÍVEL */
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 4px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 36px;
+            overflow: hidden;
+        }
+
+        .search-btn {
+            background: transparent;
+            border: none;
+            min-width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+        }
+
+        #search-input {
+            border: none !important;
+            outline: none !important;
+            background: transparent; 
+            font-size: 14px;
+            color: #333;
+            width: 0;
+            padding: 0;
+            opacity: 0;
+            transition: width 0.3s ease, opacity 0.2s ease, padding 0.3s ease;
+            box-shadow: none !important;
+        }
+
+        .search-container.active {
+            width: 240px;
+            border-color: #00BFA5;
+            box-shadow: 0 4px 12px rgba(0, 191, 165, 0.2);
+        }
+
+        .search-container.active #search-input {
+            width: 180px;
+            opacity: 1;
+            padding: 0 8px;
+        }
+
+        /* ESTRUTURA DO CONTEÚDO */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 60px 20px;
+        }
+
+        .back-nav {
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            color: #00796B;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
         }
 
         .header-page {
@@ -32,61 +131,59 @@
 
         .header-page p {
             color: #555;
-            font-size: 16px;
+            font-size: 15px;
         }
 
-        /* NAVEGAÇÃO POR CATEGORIAS (TABS / FILTROS) */
+        /* CATEGORIAS */
         .category-title {
             font-size: 20px;
             color: #004D40;
             border-bottom: 2px solid #00BFA5;
             padding-bottom: 8px;
-            margin: 30px 0 20px 0;
+            margin: 35px 0 20px 0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        /* GRID DE CARDS DOS SERVIÇOS */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 22px;
         }
 
-        /* CARD DE CADA SERVIÇO */
+        /* CARDS LIMPOS (SEM BOTÕES 4º PONTO) */
         .card {
             background: #ffffff;
             border-radius: 16px;
             padding: 24px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            border: 1px solid #E5E5E5;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
 
         .card-header {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             margin-bottom: 12px;
         }
 
         .card-icon {
-            font-size: 28px;
+            font-size: 26px;
             background: #E0F2F1;
-            padding: 10px;
+            width: 48px;
+            height: 48px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
         .card-title h3 {
@@ -96,10 +193,11 @@
         }
 
         .card-title span {
-            font-size: 12px;
+            font-size: 11px;
             color: #00796B;
-            font-weight: bold;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .card-body p {
@@ -109,11 +207,10 @@
             line-height: 1.4;
         }
 
-        /* LISTA DE INFORMAÇÕES (HORÁRIO, CONTATO, ETC) */
         .info-list {
             list-style: none;
             padding: 0;
-            margin: 0 0 20px 0;
+            margin: 0;
             font-size: 13px;
             color: #444;
         }
@@ -125,70 +222,55 @@
             gap: 8px;
         }
 
+        .info-list li:last-child {
+            margin-bottom: 0;
+        }
+
         .info-list strong {
             color: #222;
-        }
-
-        /* BOTÃO DE AÇÃO/AGENDAMENTO */
-        .btn-action {
-            display: inline-block;
-            text-align: center;
-            background-color: #00BFA5;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 13px;
-            transition: background 0.2s;
-        }
-
-        .btn-action:hover {
-            background-color: #00897B;
-        }
-
-        .back-nav {
-            margin-bottom: 20px;
-        }
-
-        .back-link {
-            color: #00796B;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
+    <!-- CABEÇALHO COM LOGO E LUPA -->
+    <header class="main-header">
+        <div class="header-content">
+            <a href="index.html" class="logo-link">
+                <img src="img/CPQD_Logo_Positivo_RGB.png" alt="Logo CPQD" class="logo-cpqd">
+            </a>
+
+            <!-- LUPA DE BUSCA NO CANTO SUPERIOR DIREITO -->
+            <div class="search-container" id="searchContainer">
+                <button class="search-btn" id="searchBtn" aria-label="Buscar serviço">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00796B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <input type="text" id="searchInput" placeholder="Buscar serviço ou restaurante..." onkeyup="filterServices()">
+            </div>
+        </div>
+    </header>
+
     <div class="container">
-        <!-- BOTÃO VOLTAR -->
         <div class="back-nav">
             <a href="index.html" class="back-link">← Voltar para o CPQD 360</a>
         </div>
 
-        <!-- CABEÇALHO -->
         <div class="header-page">
             <h1>Serviços & Amenities</h1>
             <p>Conheça as opções de alimentação, esporte, bem-estar e convivência dentro do Pólis.</p>
         </div>
 
         <!-- SEÇÃO 1: ALIMENTAÇÃO -->
-        <div class="category-title">
-            <span>🍽️</span> Alimentação & Lanchonetes
-        </div>
+        <div class="category-section">
+            <div class="category-title">
+                <span>🍽️</span> Alimentação & Lanchonetes
+            </div>
 
-        <div class="services-grid">
-            <!-- RESTAURANTE CENTRAL -->
-            <div class="card">
-                <div>
+            <div class="services-grid">
+                <div class="card">
                     <div class="card-header">
                         <div class="card-icon">🍲</div>
                         <div class="card-title">
@@ -205,12 +287,8 @@
                         </ul>
                     </div>
                 </div>
-                <a href="#" class="btn-action">Ver Cardápio do Dia</a>
-            </div>
 
-            <!-- CAFETERIA / LANCHONETE -->
-            <div class="card">
-                <div>
+                <div class="card">
                     <div class="card-header">
                         <div class="card-icon">☕</div>
                         <div class="card-title">
@@ -223,65 +301,94 @@
                         <ul class="info-list">
                             <li>🕒 <strong>Horário:</strong> 07h30 às 17h00 (Seg a Sex)</li>
                             <li>📍 <strong>Local:</strong> Próximo ao Auditório</li>
+                            <li>📞 <strong>Contato:</strong> Ramal 4005</li>
                         </ul>
                     </div>
                 </div>
-                <a href="#" class="btn-action">Fazer Pedido / Contato</a>
             </div>
         </div>
 
-        <!-- SEÇÃO 2: CLUBE & ESPORTES -->
-        <div class="category-title">
-            <span>⚽</span> Clube, Esportes & Lazer
-        </div>
+        <!-- SEÇÃO 2: ESPORTES E LAZER -->
+        <div class="category-section">
+            <div class="category-title">
+                <span>⚽</span> Esportes & Lazer (Clube)
+            </div>
 
-        <div class="services-grid">
-            <!-- ACADEMIA E CLUBE -->
-            <div class="card">
-                <div>
+            <div class="services-grid">
+                <div class="card">
                     <div class="card-header">
                         <div class="card-icon">🏋️‍♂️</div>
                         <div class="card-title">
-                            <span>Associação / Clube</span>
-                            <h3>Academia & Clube de Esportes</h3>
+                            <span>Academia</span>
+                            <h3>Academia da Associação</h3>
                         </div>
                     </div>
                     <div class="card-body">
-                        <p>Estrutura completa com musculação, aulas funcionais e vestiários estruturados.</p>
+                        <p>Estrutura de musculação, ergometria e aulas funcionais para colaboradores.</p>
                         <ul class="info-list">
                             <li>🕒 <strong>Horário:</strong> 06h00 às 21h00 (Seg a Sex)</li>
-                            <li>📍 <strong>Local:</strong> Área do Clube</li>
-                            <li>📞 <strong>Secretaria:</strong> (19) 99999-9999</li>
+                            <li>📍 <strong>Local:</strong> Área do Clube / Associação</li>
+                            <li>📞 <strong>Secretaria:</strong> Ramal 4100</li>
                         </ul>
                     </div>
                 </div>
-                <a href="#" class="btn-action">Agendar Avaliação / Matrícula</a>
-            </div>
 
-            <!-- QUADRAS E SOCIETY -->
-            <div class="card">
-                <div>
+                <div class="card">
                     <div class="card-header">
                         <div class="card-icon">🎾</div>
                         <div class="card-title">
-                            <span>Esportes</span>
+                            <span>Quadras</span>
                             <h3>Quadras de Tênis & Futebol</h3>
                         </div>
                     </div>
                     <div class="card-body">
-                        <p>Quadras de tênis e campo society iluminado para uso dos colaboradores e associados.</p>
+                        <p>Quadras de tênis e campo society ilumiado para prática esportiva.</p>
                         <ul class="info-list">
                             <li>🕒 <strong>Horário:</strong> 07h00 às 22h00</li>
-                            <li>⚠️ <strong>Reserva:</strong> Necessário agendamento prévio</li>
+                            <li>📍 <strong>Local:</strong> Área Esportiva do Clube</li>
+                            <li>📞 <strong>Reservas:</strong> Ramal 4105</li>
                         </ul>
                     </div>
                 </div>
-                <!-- Exemplo de link direto de agendamento/WhatsApp -->
-                <a href="https://wa.me/5519999999999" target="_blank" class="btn-action">Agendar Quadra via WhatsApp</a>
             </div>
         </div>
-
     </div>
+
+    <script>
+        // EXPANDIR E RECOLHER A BUSCA
+        const searchContainer = document.getElementById('searchContainer');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+
+        searchBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            searchContainer.classList.toggle('active');
+            if (searchContainer.classList.contains('active')) {
+                searchInput.focus();
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!searchContainer.contains(e.target) && searchInput.value === '') {
+                searchContainer.classList.remove('active');
+            }
+        });
+
+        // FILTRAR OS CARDS EM TEMPO REAL AO DIGITAR
+        function filterServices() {
+            const filter = searchInput.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(filter)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
