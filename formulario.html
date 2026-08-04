@@ -6,28 +6,97 @@
     <title>CPQD 360 - Compartilhe Conosco</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* ESTILOS DE LAYOUT VERTICAL E FUNDO BRANCO */
         body {
-            background-color: var(--cpqd-green-light);
+            background-color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            min-height: 100vh;
+            display: block; /* Garante alinhamento vertical normal */
+        }
+
+        /* CABEÇALHO PADRÃO DO TOPO */
+        .main-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #E5E5E5;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0 30px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 65px;
+        }
+
+        .logo-cpqd {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            gap: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 0 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #00796B;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background-color: #F4F6F6;
+        }
+
+        .nav-item.active {
+            color: #00BFA5;
+        }
+
+        /* CONTAINER CENTRALIZADO DO FORMULÁRIO */
+        .page-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            position: relative;
+            padding: 40px 20px 60px 20px;
         }
 
         .form-container {
-            background: #fff;
+            background: #ffffff;
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #E5E5E5;
             width: 100%;
             max-width: 500px;
         }
 
         .form-container h1 {
-            color: var(--cpqd-green-dark);
-            margin-bottom: 10px;
-            font-size: 24px;
+            color: #00796B;
+            margin-bottom: 8px;
+            font-size: 26px;
+            margin-top: 0;
         }
 
         .form-container p {
@@ -56,14 +125,16 @@
             font-family: inherit;
             font-size: 14px;
             outline: none;
+            box-sizing: border-box;
+            width: 100%;
         }
 
         .form-group input:focus, .form-group textarea:focus {
-            border-color: var(--color-teal);
+            border-color: #00BFA5;
         }
 
         .submit-btn {
-            background-color: var(--color-teal);
+            background-color: #00BFA5;
             color: #fff;
             border: none;
             padding: 14px;
@@ -82,12 +153,17 @@
         .back-link {
             display: inline-block;
             margin-top: 15px;
-            color: #666;
+            color: #00796B;
             text-decoration: none;
             font-size: 13px;
+            font-weight: 600;
         }
 
-        /* ESTILO DO POPUP (MODAL DE SUCESSO) */
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* MODAL DE SUCESSO */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -142,10 +218,12 @@
     </style>
 </head>
 <body>
+
+    <!-- CABEÇALHO DO TOPO FIXO E ALINHADO -->
     <header class="main-header">
         <div class="header-content">
             <a href="index.html" class="logo-link">
-                <img src="img/logo-cpqd.png" alt="Logo CPQD" class="logo-cpqd">
+                <img src="img/CPQD_Logo_Positivo_RGB.png" alt="Logo CPQD" class="logo-cpqd">
             </a>
 
             <nav class="main-nav">
@@ -158,32 +236,34 @@
 
     <!-- IFRAME OCULTO -->
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { showSuccessModal(); }"></iframe>
-    
-    <div class="form-container">
-        <h1>Entre em Contato</h1>
-        <p>Quer compartilhar algo conosco? Preencha o formulário abaixo.</p>
 
-        <!-- SUBMIT DIRECIONADO PARA O IFRAME OCULTO -->
-        <form id="feedbackForm" action="https://script.google.com/a/macros/cpqd.com.br/s/AKfycbyOE9tB6pxThtfxHYi4LF42sbri69fXdZA8i3UZBlTEV8pIYf1Lv2pQkNxt3ZUedWWzcw/exec" method="POST" target="hidden_iframe" onsubmit="submitted=true;">
-            <div class="form-group">
-                <label for="nome">Nome Completo</label>
-                <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
-            </div>
+    <!-- CONTEÚDO DO FORMULÁRIO CENTRALIZADO -->
+    <div class="page-wrapper">
+        <div class="form-container">
+            <h1>Entre em Contato</h1>
+            <p>Quer compartilhar algo conosco? Preencha o formulário abaixo.</p>
 
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" placeholder="seuemail@cpqd.com" required>
-            </div>
+            <form id="feedbackForm" action="https://script.google.com/a/macros/cpqd.com.br/s/AKfycbyOE9tB6pxThtfxHYi4LF42sbri69fXdZA8i3UZBlTEV8pIYf1Lv2pQkNxt3ZUedWWzcw/exec" method="POST" target="hidden_iframe" onsubmit="submitted=true;">
+                <div class="form-group">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+                </div>
 
-            <div class="form-group">
-                <label for="mensagem">Sua Mensagem / Sugestão</label>
-                <textarea id="mensagem" name="mensagem" rows="5" placeholder="Escreva aqui..." required></textarea>
-            </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="seuemail@cpqd.com" required>
+                </div>
 
-            <button type="submit" id="btnSubmit" class="submit-btn">Enviar Mensagem</button>
-        </form>
+                <div class="form-group">
+                    <label for="mensagem">Sua Mensagem / Sugestão</label>
+                    <textarea id="mensagem" name="mensagem" rows="5" placeholder="Escreva aqui..." required></textarea>
+                </div>
 
-        <a href="index.html" class="back-link">← Voltar para o Mapa</a>
+                <button type="submit" id="btnSubmit" class="submit-btn">Enviar Mensagem</button>
+            </form>
+
+            <a href="index.html#secao-mapa" class="back-link">← Voltar para o Mapa</a>
+        </div>
     </div>
 
     <!-- MODAL DE SUCESSO -->
@@ -199,22 +279,18 @@
         var submitted = false;
 
         function showSuccessModal() {
-            // Exibe o modal de sucesso na tela
             document.getElementById('successModal').style.display = 'flex';
             document.getElementById('feedbackForm').reset();
             
-            // Restaura o botão
             const btn = document.getElementById('btnSubmit');
             btn.innerText = "Enviar Mensagem";
             btn.disabled = false;
         }
 
-        // Função chamada ao clicar em "Voltar para o Mapa" no modal
         function redirectToMap() {
-            window.location.href = "index.html";
+            window.location.href = "index.html#secao-mapa";
         }
 
-        // Altera o texto do botão para "Enviando..." no momento do clique
         document.getElementById('feedbackForm').addEventListener('submit', function() {
             const btn = document.getElementById('btnSubmit');
             btn.innerText = "Enviando...";
