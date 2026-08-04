@@ -142,10 +142,23 @@
     </style>
 </head>
 <body>
+    <header class="main-header">
+        <div class="header-content">
+            <a href="index.html" class="logo-link">
+                <img src="img/logo-cpqd.png" alt="Logo CPQD" class="logo-cpqd">
+            </a>
 
-    <!-- IFRAME OCULTO PARA RECEBER A RESPOSTA DO GOOGLE SEM RECARREGAR A PÁGINA -->
+            <nav class="main-nav">
+                <a href="index.html#secao-mapa" class="nav-item">MAPA INTERATIVO</a>
+                <a href="servicos.html" class="nav-item">SERVIÇOS & AMENITIES</a>
+                <a href="formulario.html" class="nav-item active">COMPARTILHAR IDEIAS</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- IFRAME OCULTO -->
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { showSuccessModal(); }"></iframe>
-
+    
     <div class="form-container">
         <h1>Entre em Contato</h1>
         <p>Quer compartilhar algo conosco? Preencha o formulário abaixo.</p>
