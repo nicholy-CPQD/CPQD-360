@@ -141,6 +141,14 @@ body {
     transition: width 0.3s ease, opacity 0.2s ease, padding 0.3s ease;
 }
 
+#searchInput,
+#searchInput:focus,
+#search-input:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 /* --- ESTADO EXPANDIDO (.active ativado via JS ao clicar) --- */
 .search-container.active {
     width: 260px; /* Largura expandida ao clicar */
