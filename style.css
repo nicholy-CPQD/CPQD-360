@@ -25,13 +25,12 @@ html {
 
 body {
     font-family: var(--font-family);
-    background-color: var(--cpqd-green-light);
+    background-color: #ffffff;
     color: var(--text-dark);
     margin: 0;
     padding: 0;
 }
 
-/* --- CABEÇALHO --- */
 /* --- CABEÇALHO (HEADER) NO TOPO --- */
 .main-header {
     background-color: #ffffff;
@@ -84,92 +83,97 @@ body {
     color: #004D40;
 }
 
-/* --- BUSCA RESTAURADA COM A LUPA E CAMPO LADO A LADO --- */
-/* LINHA QUE ACOMODA A BUSCA NO ESPAÇO BRANCO */
-.search-bar-row {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px 20px 20px 20px;
-    display: flex;
-    justify-content: flex-end; /* Alinha a lupa à direita no espaço branco */
+.nav-item.active {
+    color: #00BFA5;
+    border-bottom: 3px solid #00BFA5;
 }
 
-/* CONTAINER DA BUSCA EXPANSÍVEL */
-.search-container {
+/* --- SEÇÃO DE ONBOARDING & HERO BANNER (50 ANOS CPQD) --- */
+.top-section-wrapper {
+    background-color: #ffffff;
+    width: 100%;
+    padding: 25px 20px 20px 20px;
+    text-align: center;
+}
+
+.proto-header {
+    text-align: center;
+    padding: 10px 20px 15px 20px;
+}
+
+.proto-header h1 {
+    font-family: var(--font-family);
+    color: #1a1a1a;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.proto-header .subtitle {
+    color: #555555;
+    font-size: 15px;
+    margin: 0 0 15px 0;
+}
+
+/* MOLDURA CORPORATIVA DO BANNER RETANGULAR */
+.hero-banner-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 320px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    border: 1px solid #E5E7EB;
+    position: relative;
+    background-color: #ffffff;
+}
+
+.hero-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* --- BUSCA DENTRO DA SIDEBAR DO MAPA --- */
+.sidebar-search-box {
     position: relative;
     display: flex;
     align-items: center;
-    background: #ffffff;
-    border-radius: 30px;
-    padding: 4px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 42px; /* Largura inicial (apenas o círculo do botão da lupa) */
-    overflow: hidden;
+    margin-bottom: 12px;
 }
 
-/* BOTÃO DA LUPA */
-.search-btn {
-    background: transparent;
-    border: none;
-    min-width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.sidebar-search-box .search-icon-svg {
+    position: absolute;
+    left: 10px;
+    pointer-events: none;
+}
+
+.sidebar-search-box input {
+    width: 100%;
+    padding: 8px 10px 8px 32px;
+    font-size: 13px;
+    box-sizing: border-box;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
     outline: none;
+    background: #ffffff;
 }
 
-.search-btn:hover {
-    background-color: #f0f0f0;
-}
-
-/* CAMPO DE TEXTO (INICIALMENTE ESCONDIDO) */
-#search-input {
-    border: none !important;
-    background: transparent;
-    outline: none !important;
-    box-shadow: none !important;
-    font-size: 14px;
-    color: #333;
-    width: 0;
-    padding: 0;
-    opacity: 0;
-    transition: width 0.3s ease, opacity 0.2s ease, padding 0.3s ease;
-}
-
-#searchInput,
-#searchInput:focus,
-#search-input:focus {
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-/* --- ESTADO EXPANDIDO (.active ativado via JS ao clicar) --- */
-.search-container.active {
-    width: 260px; /* Largura expandida ao clicar */
-    border-color: #00BFA5;
-    box-shadow: 0 4px 12px rgba(0, 191, 165, 0.2);
-}
-
-.search-container.active #search-input {
-    width: 200px;
-    opacity: 1;
-    padding: 0 10px;
+.sidebar-search-box input:focus {
+    border-color: #00796B;
 }
 
 /* DROPDOWN DE RESULTADOS DA BUSCA */
 .search-results-dropdown {
     position: absolute;
-    top: 48px;
-    right: 0;
-    width: 260px;
+    top: 45px;
+    left: 0;
+    width: 100%;
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     list-style: none;
     margin: 0;
@@ -184,257 +188,24 @@ body {
 }
 
 .search-results-dropdown li {
-    padding: 12px 16px;
-    font-size: 13px;
+    padding: 10px 14px;
+    font-size: 12px;
     color: #333;
     cursor: pointer;
     border-bottom: 1px solid #eee;
     transition: background 0.2s;
 }
 
-.search-results-dropdown li:last-child {
-    border-bottom: none;
-}
-
 .search-results-dropdown li:hover {
     background-color: #E0F2F1;
     color: #00796B;
-}
-/* --- BANNER DE FOTO --- */
-.hero-banner-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #ffffff;
-    padding-bottom: 30px;
-}
-
-.hero-banner {
-    width: 100%;
-    max-width: 1200px;
-    height: 420px;
-    background-image: url('img/img__50AnosCPQD.png');
-    background-size: cover;
-    background-position: center;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-}
-
-/* BOTÃO DE BUSCA ALINHADO À DIREITA */
-.header-actions {
-    display: flex;
-    align-items: center;
-}
-
-.search-btn svg {
-    stroke: #42A017; /* Verde CPQD para o ícone da lupa */
-}
-/* ===================================================
-   ESTILOS DA SEÇÃO DE ONBOARDING & HERO BANNER
-=================================================== */
-.top-section-wrapper {
-    background-color: #ffffff;
-    width: 100%;
-    padding-bottom: 40px;
-}
-
-/* TÍTULOS */
-.proto-header {
-    text-align: center;
-    padding: 30px 20px 15px 20px;
-}
-
-.proto-header h1 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #1a1a1a;
-    font-size: 32px;
-    font-weight: 600;
-    margin-bottom: 6px;
-}
-
-.proto-header .subtitle {
-    color: #555555;
-    font-size: 15px;
-    margin: 0;
-}
-
-/* ESTILO DOS 3 CARDS ALINHADOS NO TOPO */
-.guide-steps-top {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    max-width: 1100px;
-    margin: 20px auto 35px auto;
-    padding: 0 20px;
-}
-
-.step-card {
-    background: #fdfdfd;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    padding: 18px 20px;
-    border-radius: 14px;
-    width: 260px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.step-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-}
-
-.step-card-link {
-    text-decoration: none;
-    color: inherit;
-}
-
-.step-card.clickable {
-    cursor: pointer;
-    border-color: rgba(0, 191, 165, 0.3);
-}
-
-.step-icon {
-    font-size: 26px;
-    display: block;
-    margin-bottom: 8px;
-}
-
-.step-card h4 {
-    color: #00796B;
-    font-size: 15px;
-    margin-bottom: 6px;
-}
-
-.step-card p {
-    color: #666;
-    font-size: 13px;
-    line-height: 1.4;
-    margin: 0;
-}
-
-/* BANNER DE FOTO RETANGULAR (IGUAL PROTÓTIPO) */
-.hero-banner-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: #ffffff;
-}
-
-.hero-banner {
-    width: 100%;
-    max-width: 1200px;
-    height: 420px;
-    background-image: url('img/img__50AnosCPQD.png'); /* Nome do seu arquivo de imagem */
-    background-size: cover;
-    background-position: center;
-    border-radius: 0 !important; /* Remove as bordas arredondadas para colar retangular */
-    box-shadow: none !important;  /* Remove a sombra externa */
-}
-
-/* CARDS DO GUIA RÁPIDO (LADO A LADO) */
-.guide-steps {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-}
-
-.step-card {
-    background: #ffffff;
-    border: 1px solid rgba(0,0,0,0.08);
-    padding: 20px;
-    border-radius: 16px;
-    width: 250px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.step-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
-
-.step-icon {
-    font-size: 30px;
-    display: block;
-    margin-bottom: 10px;
-}
-
-.step-card h4 {
-    color: #00796B;
-    font-size: 16px;
-    margin-bottom: 8px;
-}
-
-.step-card p {
-    color: #666;
-    font-size: 13px;
-    line-height: 1.4;
-    margin: 0;
-}
-
-/* BANNER HERO COM IMAGEM DE FUNDO */
-.hero-banner {
-    position: relative;
-    background-image: url('img/img__50AnosCPQD.png'); 
-    background-size: cover;
-    background-position: center;
-    height: 350px;
-    border-radius: 20px;
-    max-width: 1100px;
-    margin: 0 auto 40px auto;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
-
-.hero-overlay {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.2));
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-.hero-overlay h2 {
-    color: #ffffff;
-    font-size: 26px;
-    margin-bottom: 25px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-}
-
-/* BOTÃO DE EXPLORAR MAPA */
-.btn-hero {
-    background-color: #00BFA5;
-    color: #ffffff !important;
-    padding: 14px 28px;
-    border-radius: 30px;
-    text-decoration: none !important;
-    font-weight: bold;
-    font-size: 16px;
-    display: inline-block;
-    box-shadow: 0 4px 15px rgba(0, 191, 165, 0.4);
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.btn-hero:hover {
-    background-color: #00897B;
-    transform: scale(1.05);
 }
 
 /* --- SEÇÃO PRINCIPAL DO MAPA --- */
 .map-section {
     position: relative;
     width: 100%;
-    height: 680px;
+    height: 620px;
     overflow: hidden;
 }
 
@@ -448,77 +219,59 @@ body {
     background-color: var(--cpqd-green-light);
 }
 
-/* --- PAINEL LATERAL (FAVORITOS E FILTROS) --- */
+/* PAINEL LATERAL (FILTROS) */
 .map-sidebar {
     position: absolute;
-    top: 30px;
-    left: 40px;
-    width: 330px;
+    top: 20px;
+    left: 30px;
+    width: 300px;
     z-index: 10;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-}
-
-.sidebar-header h1 {
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.sidebar-header p {
-    font-size: 16px;
-    color: #555555;
+    gap: 10px;
 }
 
 .filter-card {
     background-color: var(--bg-card);
-    padding: 25px;
-    border-radius: 20px;
+    padding: 20px;
+    border-radius: 16px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    max-height: 500px;
+    max-height: 480px;
     overflow-y: auto;
 }
 
-.filter-card::-webkit-scrollbar {
-    width: 5px;
-}
-
-.filter-card::-webkit-scrollbar-thumb {
-    background-color: #CCCCCC;
-    border-radius: 10px;
-}
-
 .filter-card h2 {
-    font-size: 20px;
-    margin-bottom: 5px;
+    font-size: 18px;
+    margin-bottom: 4px;
 }
 
 .filter-card .subtitle {
     font-size: 12px;
     color: #888888;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .filter-group h3, .building-list-group h3 {
-    font-size: 12px;
-    color: #888888;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
+    font-size: 11px;
+    color: #00796B;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    font-weight: 700;
 }
 
 .tag-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 25px;
+    gap: 6px;
+    margin-bottom: 15px;
 }
 
 .tag-btn {
     background-color: #EEEEEE;
     border: none;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 11px;
     cursor: pointer;
     transition: background 0.2s;
 }
@@ -528,34 +281,28 @@ body {
     color: var(--white);
 }
 
-.building-list-group {
-    margin-top: 15px;
-}
-
 .building-list {
     list-style: none;
-    font-size: 14px;
+    font-size: 13px;
     padding: 0;
+    max-height: 160px;
+    overflow-y: auto;
 }
 
 .building-list li {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border-radius: 8px;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
+    transition: background 0.2s;
 }
 
-.building-list li:hover {
+.building-list li:hover, .building-list li.active {
     background-color: #E0F2F1;
-    transform: translateX(3px);
-}
-
-.building-list li.active {
-    background-color: #E0F2F1;
-    font-weight: bold;
+    color: #00796B;
+    font-weight: 600;
 }
 
 .status-dot {
@@ -571,23 +318,22 @@ body {
 /* --- LEGENDA DO MAPA --- */
 .map-legend {
     position: absolute;
-    top: 30px;
-    right: 30px;
+    bottom: 25px;
+    right: 25px;
     background-color: #FFFFFF;
-    padding: 18px 22px;
-    border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    padding: 14px 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     z-index: 10;
-    min-width: 160px;
+    min-width: 150px;
 }
 
 .map-legend h3 {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     color: #888888;
     letter-spacing: 1px;
-    margin-bottom: 12px;
-    text-align: right;
+    margin-bottom: 8px;
     text-transform: uppercase;
 }
 
@@ -595,7 +341,7 @@ body {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     padding: 0;
     margin: 0;
 }
@@ -603,18 +349,16 @@ body {
 .map-legend li {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    font-size: 13px;
+    gap: 8px;
+    font-size: 12px;
     color: #444444;
 }
 
 .legend-color {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border-radius: 3px;
     flex-shrink: 0;
-    display: inline-block;
 }
 
 .legend-color.color-pd { background-color: var(--color-teal); }
@@ -623,32 +367,27 @@ body {
 .legend-color.color-verde { background-color: transparent; border: 1.5px solid #42A017; }
 .legend-color.color-acesso { background-color: #E0E0E0; border: 1px solid #CCCCCC; }
 
-/* --- RF05: BOTÃO RESET --- */
+/* --- BOTÃO RESET --- */
 .reset-btn {
     position: absolute;
-    bottom: 30px;
-    right: 30px;
+    bottom: 25px;
+    right: 200px; /* Posicionado ao lado da legenda no desktop */
     z-index: 10;
     background-color: var(--white);
     border: none;
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s, background-color 0.2s;
+    transition: transform 0.2s;
 }
 
 .reset-btn:hover {
-    background-color: #F8F8F8;
     transform: scale(1.05);
-}
-
-.reset-btn:active {
-    transform: scale(0.95);
 }
 
 /* --- CUSTOMIZAÇÃO DO POPUP LEAFLET --- */
@@ -662,52 +401,37 @@ body {
 
 .leaflet-popup-content {
     margin: 0;
-    width: 320px !important;
+    width: 280px !important;
 }
 
 .custom-popup-header {
     background-color: var(--cpqd-green-dark);
     color: var(--text-light);
-    padding: 15px;
+    padding: 12px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .custom-popup-header h2 {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     margin: 0;
 }
 
 .leaflet-container a.leaflet-popup-close-button {
     color: var(--text-light);
-    top: 12px;
-    right: 12px;
-    font-size: 16px;
+    top: 10px;
+    right: 10px;
 }
 
 .custom-popup-body {
-    padding: 20px;
-    font-size: 14px;
+    padding: 15px;
+    font-size: 13px;
     color: #555555;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
 }
 
-.popup-details-btn {
-    background-color: var(--color-teal);
-    color: var(--text-light);
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-}
-
-/* --- RODAPÉ AJUSTADO --- */
+/* --- RODAPÉ (FOOTER) --- */
 .main-footer {
     background-color: #FFFFFF;
     color: #333333;
@@ -726,7 +450,7 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
-    font-size: 14px;
+    font-size: 13px;
     color: #FFFFFF;
     font-weight: 500;
 }
@@ -741,46 +465,37 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 35px 60px;
-    max-width: 1400px;
+    padding: 30px 60px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .footer-col {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .social-icons {
     display: flex;
     gap: 12px;
-    margin-bottom: 10px;
-}
-
-.social-icon svg {
-    transition: opacity 0.2s;
-}
-
-.social-icon:hover svg {
-    opacity: 0.6;
 }
 
 .title-serif {
     font-family: 'Georgia', serif;
-    font-size: 26px;
+    font-size: 22px;
     color: #222222;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .subtitle-contact {
-    font-size: 16px;
+    font-size: 14px;
     color: #444444;
 }
 
 .contact-col {
     text-align: left;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .contact-col a {
@@ -788,103 +503,248 @@ body {
     text-decoration: none;
 }
 
-.contact-col p {
-    color: #222222;
-    margin: 2px 0;
-}
-
-.contact-col .form-link {
-    text-decoration: underline;
-    color: #222222;
-}
-
 .footer-bottom-bar {
     background-color: #FFFFFF;
-    padding: 15px 60px;
-    font-size: 12px;
-    color: #333333;
+    padding: 12px 60px;
+    font-size: 11px;
+    color: #666;
     border-top: 1px solid #F0F0F0;
+    text-align: center;
 }
 
-/* --- RESPONSIVIDADE (MOBILE) --- */
-@media (max-width: 768px) {
-    .header-content { flex-direction: column; gap: 10px; text-align: center; }
-    
-    .map-sidebar, .map-legend, .reset-btn {
-        position: static;
-        width: 100%;
-        margin: 10px 0;
-    }
-    
-    .map-sidebar { order: 2; padding: 20px; }
-    .map-legend { order: 3; text-align: left; width: 100%; }
-    .map-legend li { justify-content: flex-start; }
 
-    #map {
-        position: relative;
-        height: 50vh;
-        order: 1;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        padding: 30px;
-        gap: 30px;
-        text-align: center;
-    }
-
-    .social-icons { justify-content: center; }
-}
 /* ================= ==========================================
-   AJUSTES RESPONSIVOS PARA CELULARES E TABLETS (MOBILE)
+   REGRAS EXCLUSIVAS E RESPONSIVAS PARA MOBILE (@media)
    ========================================================== */
 
 @media (max-width: 768px) {
-    /* Ajustes no Header e Menu */
+
+    body, html {
+        overflow-x: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 1. HEADER E NAV COMPACTO EM LINHA */
+    .main-header {
+        position: relative !important;
+        padding: 6px 12px !important;
+        height: auto !important;
+        background: #ffffff !important;
+        border-bottom: 1px solid #E5E5E5 !important;
+        z-index: 1000 !important;
+    }
+
     .header-content {
-        flex-direction: column;
-        height: auto;
-        padding: 15px 0;
-        gap: 12px;
+        flex-direction: column !important;
+        height: auto !important;
+        gap: 4px !important;
+        padding: 0 !important;
+    }
+
+    .logo-cpqd {
+        height: 28px !important;
     }
 
     .main-nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        gap: 2px !important;
     }
 
     .nav-item {
-        padding: 8px 12px;
-        font-size: 12px;
+        font-size: 10px !important;
+        padding: 4px 2px !important;
+        white-space: nowrap !important;
+        flex: 1 !important;
+        text-align: center !important;
+        border: none !important;
     }
 
-    /* Ajustes nas Abas e Grids do Serviços */
-    .tab-switcher {
-        flex-direction: column;
-        width: 100%;
+    /* 2. ADAPTAÇÃO DA SEÇÃO BANNER NO MOBILE */
+    .top-section-wrapper {
+        padding: 10px 12px 4px 12px !important;
+        text-align: center !important;
     }
 
-    .tab-btn {
-        width: 100%;
-        text-align: center;
+    .proto-header {
+        padding: 0 0 6px 0 !important;
     }
 
-    .grid-3, .info-grid-2 {
-        grid-template-columns: 1fr !important;
+    .proto-header h1 {
+        font-size: 16px !important;
+        margin: 0 0 2px 0 !important;
     }
 
-    /* Ajustes em Tabelas no Celular (Scroll Horizontal se necessário) */
-    .club-card {
-        overflow-x: auto;
+    .proto-header .subtitle {
+        font-size: 11px !important;
+        margin-bottom: 8px !important;
     }
 
-    .custom-table {
-        min-width: 320px;
+    .hero-banner-container {
+        height: 100px !important;
+        border-radius: 8px !important;
     }
 
-    /* Formulário no Celular */
-    .form-container {
-        padding: 20px;
+    /* 3. MAPA LOGO ABAIXO DO BANNER */
+    .map-section, #secao-mapa {
+        position: relative !important;
+        width: 100% !important;
+        height: calc(100vh - 210px) !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+    }
+
+    #map {
+        width: 100% !important;
+        height: 100% !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        z-index: 1 !important;
+    }
+
+    /* 4. CARD DE FILTROS E LUPA (PEQUENO NO CANTO SUPERIOR ESQUERDO) */
+    .map-sidebar {
+        position: absolute !important;
+        top: 10px !important;
+        left: 10px !important;
+        right: auto !important;
+        width: 190px !important;
+        max-width: 60vw !important;
+        height: auto !important;
+        max-height: 125px !important;
+        overflow-y: auto !important;
+        z-index: 500 !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(8px) !important;
+        border-radius: 8px !important;
+        padding: 6px 8px !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
+        margin: 0 !important;
+    }
+
+    .sidebar-search-box input {
+        padding: 4px 6px 4px 24px !important;
+        font-size: 9px !important;
+    }
+
+    .filter-card {
+        padding: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .filter-group h3, .building-list-group h3 {
+        font-size: 8px !important;
+        margin: 2px 0 !important;
+        color: #00796B !important;
+        font-weight: 700 !important;
+    }
+
+    .tag-container {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 2px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .tag-btn {
+        padding: 2px 5px !important;
+        font-size: 8px !important;
+        border-radius: 6px !important;
+    }
+
+    .building-list {
+        max-height: 45px !important;
+        overflow-y: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .building-list li {
+        padding: 2px 0 !important;
+        font-size: 9px !important;
+    }
+
+    /* 5. LEGENDA FIXA (CANTO INFERIOR ESQUERDO) */
+    .map-legend {
+        position: absolute !important;
+        bottom: 12px !important;
+        left: 10px !important;
+        top: auto !important;
+        right: auto !important;
+        width: 160px !important;
+        max-width: 50vw !important;
+        height: auto !important;
+        max-height: 85px !important;
+        overflow-y: auto !important;
+        z-index: 500 !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        backdrop-filter: blur(8px) !important;
+        padding: 6px 8px !important;
+        border-radius: 8px !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
+        margin: 0 !important;
+    }
+
+    .map-legend h3 {
+        font-size: 8px !important;
+        margin: 0 0 2px 0 !important;
+        color: #333 !important;
+        font-weight: 700 !important;
+    }
+
+    .map-legend ul {
+        margin: 0 !important;
+        padding: 0 !important;
+        list-style: none !important;
+    }
+
+    .map-legend li {
+        font-size: 8px !important;
+        padding: 1px 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        color: #333 !important;
+    }
+
+    /* 6. BOTÃO RESETAR VISÃO (CANTO INFERIOR DIREITO) */
+    .reset-btn, #reset-map-btn {
+        position: absolute !important;
+        bottom: 12px !important;
+        right: 10px !important;
+        top: auto !important;
+        left: auto !important;
+        width: 34px !important;
+        height: 34px !important;
+        z-index: 501 !important;
+        background: #ffffff !important;
+        border-radius: 50% !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: none !important;
+        margin: 0 !important;
+    }
+
+    /* RODAPÉ MOBILE */
+    .footer-content {
+        flex-direction: column !important;
+        padding: 20px !important;
+        gap: 15px !important;
+        text-align: center !important;
+    }
+
+    .social-icons {
+        justify-content: center !important;
     }
 }
