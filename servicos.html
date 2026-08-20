@@ -408,9 +408,10 @@
             <button class="tab-btn" onclick="switchTab('telecamp', this)">Clube Telecamp & Esportes</button>
         </div>
 
-        <!-- ABA 1: GASTRONOMIA -->
+<!-- ABA 1: GASTRONOMIA -->
         <div id="tab-gastronomia" class="tab-content active">
             <div class="grid-3">
+                
                 <!-- LE CAFÉ -->
                 <div class="card-restaurant searchable-item">
                     <div>
@@ -426,14 +427,16 @@
                             • Segunda a Quinta: 07h20 às 17h00<br>
                             • Sexta-feira: 07h20 às 15h00
                         </div>
-                        <div class="info-row">
-                            <strong>Atendimento WhatsApp:</strong><br>
-                            +55 19 99557-1905
-                        </div>
                     </div>
-                    <a href="https://wa.me/5519995571905" target="_blank" class="btn-link-action">
-                        Contato via WhatsApp
-                    </a>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 15px;">
+                        <!-- BOTÃO CONECTADO AO PAINEL ADMIN -->
+                        <a href="#" id="btn-cardapio-lecafe" data-restaurant="lecafe" target="_blank" class="btn-link-action" style="background-color: #00796B; color: #fff;">
+                            Ver Cardápio
+                        </a>
+                        <a href="https://wa.me/5519995571905" target="_blank" class="btn-link-action">
+                            Contato via WhatsApp
+                        </a>
+                    </div>
                 </div>
 
                 <!-- THIANE GASTRONOMIA -->
@@ -450,14 +453,16 @@
                             <strong>Horário de Funcionamento:</strong><br>
                             • Segunda a Sexta: 08h00 às 15h30
                         </div>
-                        <div class="info-row">
-                            <strong>Atendimento WhatsApp:</strong><br>
-                            +55 11 94219-5851
-                        </div>
                     </div>
-                    <a href="https://wa.me/5511942195851" target="_blank" class="btn-link-action">
-                        Contato via WhatsApp
-                    </a>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 15px;">
+                        <!-- BOTÃO CONECTADO AO PAINEL ADMIN -->
+                        <a href="#" id="btn-cardapio-thiane" data-restaurant="thiane" target="_blank" class="btn-link-action" style="background-color: #00796B; color: #fff;">
+                            Ver Cardápio
+                        </a>
+                        <a href="https://wa.me/5511942195851" target="_blank" class="btn-link-action">
+                            Contato via WhatsApp
+                        </a>
+                    </div>
                 </div>
 
                 <!-- LARANJA LIMA -->
@@ -474,15 +479,18 @@
                             <strong>Horário de Funcionamento:</strong><br>
                             • Segunda a Sexta: 07h40 às 17h00
                         </div>
-                        <div class="info-row">
-                            <strong>Comunicação:</strong><br>
-                            Grupo exclusivo de avisos e cardápio no WhatsApp.
-                        </div>
                     </div>
-                    <a href="https://chat.whatsapp.com/LUUc2PL1gxI8i9LVntNWTe?s=sh&p=a&ilr=4" target="_blank" class="btn-link-action">
-                        Acessar Grupo de Avisos
-                    </a>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 15px;">
+                        <!-- BOTÃO CONECTADO AO PAINEL ADMIN -->
+                        <a href="#" id="btn-cardapio-laranjalima" data-restaurant="laranjalima" target="_blank" class="btn-link-action" style="background-color: #00796B; color: #fff;">
+                            Ver Cardápio
+                        </a>
+                        <a href="https://chat.whatsapp.com/LUUc2PL1gxI8i9LVntNWTe?s=sh&p=a&ilr=4" target="_blank" class="btn-link-action">
+                            Acessar Grupo de Avisos
+                        </a>
+                    </div>
                 </div>
+
             </div>
         </div>
 
@@ -691,6 +699,25 @@
                 }
             });
         }
+    </script>
+    <!-- Script de atualização dinâmica do cardápio -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const restaurantes = ['lecafe', 'thiane', 'laranjalima'];
+
+            restaurantes.forEach(restaurante => {
+                const cardapioSalvo = localStorage.getItem(`cardapio_${restaurante}`);
+                if (cardapioSalvo) {
+                    const btnCardapio = document.querySelector(`[data-restaurant="${restaurante}"]`) || 
+                                        document.getElementById(`btn-cardapio-${restaurante}`);
+                    
+                    if (btnCardapio) {
+                        btnCardapio.href = cardapioSalvo;
+                        btnCardapio.target = "_blank";
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>

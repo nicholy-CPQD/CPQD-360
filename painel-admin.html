@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pólis CPQD - Painel de Gestão do Cardápio</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: var(--cpqd-green-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+            flex: 1;
+        }
+
+        .dashboard-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E5E7EB;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #F3F4F6;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .dashboard-header h2 {
+            font-size: 22px;
+            color: #111827;
+            margin: 0;
+        }
+
+        .dashboard-header p {
+            font-size: 13px;
+            color: #6B7280;
+            margin: 4px 0 0 0;
+        }
+
+        .user-badge {
+            background: #E0F2F1;
+            color: #00796B;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+        }
+
+        .form-section h3 {
+            font-size: 14px;
+            color: #00796B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="url"],
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #00796B;
+        }
+
+        .divider {
+            text-align: center;
+            font-size: 12px;
+            color: #9CA3AF;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 42%;
+            height: 1px;
+            background: #E5E7EB;
+        }
+
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+
+        .btn-save {
+            background-color: #00796B;
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        .btn-save:hover {
+            background-color: #004D40;
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: 1px solid #DC2626;
+            color: #DC2626;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: #DC2626;
+            color: #ffffff;
+        }
+
+        .alert-success {
+            background-color: #D1FAE5;
+            color: #065F46;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="main-header">
+        <div class="header-content">
+            <a href="index.html" class="logo-link">
+                <img src="img/CPQD_Logo_Positivo_RGB.png" alt="Logo CPQD" class="logo-cpqd">
+            </a>
+            <button class="btn-logout" onclick="handleLogout()">Sair do Painel</button>
+        </div>
+    </header>
+
+    <!-- PAINEL PRINCIPAL -->
+    <div class="dashboard-container">
+        <div class="dashboard-card">
+            <div class="dashboard-header">
+                <div>
+                    <h2>Gestão de Cardápio</h2>
+                    <p>Atualize as refeições e serviços exibidos aos usuários</p>
+                </div>
+                <span id="user-badge" class="user-badge">Parceiro Ativo</span>
+            </div>
+
+            <div id="success-alert" class="alert-success">
+                Cardápio atualizado com sucesso! As alterações já estão visíveis no site público.
+            </div>
+
+            <form id="menuForm" onsubmit="handleSaveMenu(event)">
+                <div class="form-section">
+                    <h3>1. Selecionar Estabelecimento</h3>
+                    <div class="form-group">
+                        <label for="restaurant">Restaurante / Amenity</label>
+                        <select id="restaurant" required>
+                            <option value="lecafe">Le Café (Restaurante Central)</option>
+                            <option value="thiane">Thiane Gastronomia</option>
+                            <option value="laranjalima">Laranja Lima Conveniência</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>2. Atualizar Mídia do Cardápio</h3>
+                    
+                    <div class="form-group">
+                        <label for="menuLink">Opção A: Link Direto (Google Drive, Canva, PDF Online)</label>
+                        <input type="url" id="menuLink" placeholder="https://drive.google.com/file/d/exemplo/view">
+                    </div>
+
+                    <div class="divider">OU</div>
+
+                    <div class="form-group">
+                        <label for="menuFile">Opção B: Upload de Arquivo (PDF ou Imagem)</label>
+                        <input type="file" id="menuFile" accept="application/pdf, image/*">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-save">Publicar Novo Cardápio</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- RODAPÉ COMPACTO -->
+    <footer class="footer-bottom-bar" style="text-align: center; padding: 15px; background: #fff;">
+        <p>Bússola da Jornada - CPQD 360 © All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Checa se o usuário está logado ao carregar a página
+        document.addEventListener("DOMContentLoaded", function() {
+            const user = sessionStorage.getItem('userLogado');
+            if (!user) {
+                // Se não estiver logado, redireciona para a página de login secreta
+                window.location.href = 'admin.html';
+            } else {
+                document.getElementById('user-badge').innerText = user;
+            }
+        });
+
+        function handleSaveMenu(e) {
+            e.preventDefault();
+            const restaurant = document.getElementById('restaurant').value;
+            const menuLink = document.getElementById('menuLink').value;
+
+            // Salva temporariamente no localStorage para simulação imediata
+            if (menuLink) {
+                localStorage.setItem(`cardapio_${restaurant}`, menuLink);
+            }
+
+            // Exibe mensagem de sucesso
+            const alertBox = document.getElementById('success-alert');
+            alertBox.style.display = 'block';
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 4000);
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('userLogado');
+            window.location.href = 'admin.html';
+        }
+    </script>
+</body>
+</html>
