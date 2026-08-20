@@ -835,3 +835,56 @@ body {
 
     .social-icons { justify-content: center; }
 }
+/* ================= ==========================================
+   AJUSTES RESPONSIVOS PARA CELULARES E TABLETS (MOBILE)
+   ========================================================== */
+
+@media (max-width: 768px) {
+    /* Ajustes no Header e Menu */
+    .header-content {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 0;
+        gap: 12px;
+    }
+
+    .main-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .nav-item {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    /* Ajustes nas Abas e Grids do Serviços */
+    .tab-switcher {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .tab-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .grid-3, .info-grid-2 {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Ajustes em Tabelas no Celular (Scroll Horizontal se necessário) */
+    .club-card {
+        overflow-x: auto;
+    }
+
+    .custom-table {
+        min-width: 320px;
+    }
+
+    /* Formulário no Celular */
+    .form-container {
+        padding: 20px;
+    }
+}
