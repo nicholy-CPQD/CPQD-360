@@ -418,7 +418,7 @@
                         <div class="brand-header">
                             <img src="img/logolecafe.png" alt="Le Café" class="brand-logo" onerror="this.style.display='none'">
                             <div class="brand-title">
-                                <span>Cafeteria</span>
+                                <span>Restaurante</span>
                                 <h3>Le Café</h3>
                             </div>
                         </div>
@@ -465,13 +465,39 @@
                     </div>
                 </div>
 
+                <!-- VILLANI -->
+<div class="card-restaurant searchable-item">
+    <div>
+        <div class="brand-header">
+            <img src="img/logovillani.jpeg" alt="Villani" class="brand-logo" onerror="this.style.display='none'">
+            <div class="brand-title">
+                <span>Restaurante</span>
+                <h3>Villani</h3>
+            </div>
+        </div>
+        <div class="info-row">
+            <strong>Horário de Funcionamento:</strong><br>
+            • Segunda a Sexta-feira: 11h00 às 14h00
+        </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 15px;">
+        <!-- BOTÃO CONECTADO AO PAINEL ADMIN -->
+        <a href="#" id="btn-cardapio-villani" data-restaurant="villani" target="_blank" class="btn-link-action" style="background-color: #00796B; color: #fff;">
+            Ver Cardápio
+        </a>
+        <a href="https://wa.me/5519989234521" target="_blank" class="btn-link-action">
+            Contato via WhatsApp
+        </a>
+    </div>
+</div>
+
                 <!-- LARANJA LIMA -->
                 <div class="card-restaurant searchable-item">
                     <div>
                         <div class="brand-header">
                             <img src="img/logoLL.png" alt="Laranja Lima" class="brand-logo" onerror="this.style.display='none'">
                             <div class="brand-title">
-                                <span>Restaurante & Sucre</span>
+                                <span>Restaurante</span>
                                 <h3>Laranja Lima</h3>
                             </div>
                         </div>
@@ -700,24 +726,41 @@
             });
         }
     </script>
-    <!-- Script de atualização dinâmica do cardápio -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const restaurantes = ['lecafe', 'thiane', 'laranjalima'];
+<!-- Leitura em Tempo Real do Firebase -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-            restaurantes.forEach(restaurante => {
-                const cardapioSalvo = localStorage.getItem(`cardapio_${restaurante}`);
-                if (cardapioSalvo) {
-                    const btnCardapio = document.querySelector(`[data-restaurant="${restaurante}"]`) || 
-                                        document.getElementById(`btn-cardapio-${restaurante}`);
-                    
-                    if (btnCardapio) {
-                        btnCardapio.href = cardapioSalvo;
-                        btnCardapio.target = "_blank";
-                    }
+    const firebaseConfig = {
+        apiKey: "AIzaSyCMIs6nsvccmGdhzsad8d_CjAQLCUgV8gg",
+        authDomain: "cpqd-360.firebaseapp.com",
+        projectId: "cpqd-360",
+        storageBucket: "cpqd-360.firebasestorage.app",
+        messagingSenderId: "756307346468",
+        appId: "1:756307346468:web:7a2f987064bdf4d7a804b1",
+        measurementId: "G-KPV28EBFJB"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Ouve as atualizações do banco em tempo real
+    onSnapshot(collection(db, "cardapios"), (snapshot) => {
+        snapshot.forEach((docSnap) => {
+            const restauranteId = docSnap.id;
+            const dados = docSnap.data();
+
+            if (dados && dados.link) {
+                const btnCardapio = document.querySelector(`[data-restaurant="${restauranteId}"]`) || 
+                                    document.getElementById(`btn-cardapio-${restauranteId}`);
+                
+                if (btnCardapio) {
+                    btnCardapio.href = dados.link;
+                    btnCardapio.target = "_blank";
                 }
-            });
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>

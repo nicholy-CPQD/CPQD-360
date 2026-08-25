@@ -153,21 +153,46 @@
         <p>Bússola da Jornada - CPQD 360 © All Rights Reserved</p>
     </footer>
 
-    <script>
-        function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+<!-- SDKs do Firebase (Modular v9/v10) -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-            // Simulação de autenticação inicial para validação de fluxo
-            if (email && password) {
-                // Salva a sessão temporária
-                sessionStorage.setItem('userLogado', email);
-                window.location.href = 'painel-admin.html';
-            } else {
-                document.getElementById('error-msg').style.display = 'block';
-            }
+    // Configuração do seu projeto
+    const firebaseConfig = {
+        apiKey: "AIzaSyCMIs6nsvccmGdhzsad8d_CjAQLCUgV8gg",
+        authDomain: "cpqd-360.firebaseapp.com",
+        projectId: "cpqd-360",
+        storageBucket: "cpqd-360.firebasestorage.app",
+        messagingSenderId: "756307346468",
+        appId: "1:756307346468:web:7a2f987064bdf4d7a804b1",
+        measurementId: "G-KPV28EBFJB"
+    };
+
+    // Inicializa Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Função de Login Real
+    window.handleLogin = async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const errorMsg = document.getElementById('error-msg');
+
+        errorMsg.style.display = 'none';
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            // Salva a sessão do usuário
+            sessionStorage.setItem('userLogado', userCredential.user.email);
+            window.location.href = 'painel-admin.html';
+        } catch (error) {
+            console.error("Erro na autenticação:", error);
+            errorMsg.innerText = "E-mail ou senha incorretos ou usuário não cadastrado.";
+            errorMsg.style.display = 'block';
         }
-    </script>
+    }
+</script>
 </body>
 </html>
