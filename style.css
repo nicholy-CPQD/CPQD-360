@@ -1,8 +1,11 @@
-/* --- RT01, RT04: CSS Base e Variáveis (Padrão CPQD) --- */
+/* ===================================================
+   RT01, RT04: CSS BASE E VARIÁVEIS (PADRÃO CPQD)
+=================================================== */
 :root {
     --cpqd-green-light: #C8E6C9; /* Fundo claro da página */
     --cpqd-green-main: #8CE66D;  /* Verde Logo/Destaque */
-    --cpqd-green-dark: #00796B;   /* Fundo Popup/Detalhes */
+    --cpqd-green-dark: #00796B;   /* Fundo Popup/Detalhes e Botões */
+    --cpqd-green-hover: #004D40;  /* Estado Hover */
     --color-orange: #FFA726;
     --color-yellow: #FDD835;
     --color-teal: #00BFA5;
@@ -10,6 +13,7 @@
     --text-light: #FFFFFF;
     --white: #FFFFFF;
     --bg-card: rgba(255, 255, 255, 0.95);
+    --border-color: #E5E7EB;
     --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -29,13 +33,19 @@ body {
     color: var(--text-dark);
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* --- CABEÇALHO (HEADER) NO TOPO --- */
+/* ===================================================
+   CABEÇALHO (HEADER) E NAVEGAÇÃO GLOBAL
+=================================================== */
 .main-header {
     background-color: #ffffff;
     border-bottom: 1px solid #E5E5E5;
-    position: relative;
+    position: sticky;
+    top: 0;
     z-index: 1000;
     padding: 0 30px;
 }
@@ -55,7 +65,6 @@ body {
     display: block;
 }
 
-/* NAVEGAÇÃO DE MENU DENTRO DO HEADER */
 .main-nav {
     display: flex;
     align-items: center;
@@ -71,19 +80,44 @@ body {
     padding: 0 20px;
     font-size: 13px;
     font-weight: 600;
-    color: #00796B;
+    color: var(--cpqd-green-dark);
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.3px;
+    position: relative;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-item:hover {
     background-color: #F4F6F6;
-    color: #004D40;
+    color: var(--cpqd-green-hover);
 }
 
-/* --- BUSCA RESTAURADA COM A LUPA E CAMPO LADO A LADO --- */
+/* Indicador Visual da Página Ativa */
+.nav-item.active {
+    color: var(--cpqd-green-dark);
+    font-weight: 700;
+}
+
+.nav-item.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--cpqd-green-dark);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* ===================================================
+   BUSCA COM LUPA / EXPANSÍVEL
+=================================================== */
 .search-bar-row {
     max-width: 1200px;
     margin: 0 auto;
@@ -119,6 +153,10 @@ body {
     outline: none;
 }
 
+.search-btn svg {
+    stroke: #42A017;
+}
+
 .search-btn:hover {
     background-color: #f0f0f0;
 }
@@ -134,14 +172,6 @@ body {
     padding: 0;
     opacity: 0;
     transition: width 0.3s ease, opacity 0.2s ease, padding 0.3s ease;
-}
-
-#searchInput,
-#searchInput:focus,
-#search-input:focus {
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
 }
 
 .search-container.active {
@@ -160,7 +190,7 @@ body {
     position: absolute;
     top: 48px;
     right: 0;
-    width: 260px;
+    width: 280px;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
@@ -185,64 +215,13 @@ body {
     transition: background 0.2s;
 }
 
-.search-results-dropdown li:last-child {
-    border-bottom: none;
-}
-
 .search-results-dropdown li:hover {
     background-color: #E0F2F1;
-    color: #00796B;
-}
-
-/* --- BANNER DE FOTO DESKTOP --- */
-.hero-banner-container {
-    width: 100% !important;
-    max-width: 1200px !important; /* Expande para preencher a largura total da página */
-    height: 380px !important;     /* Altura perfeita para manter a proporção sem ficar gigante */
-    margin: 0 auto !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    background-color: #ffffff !important;
-    padding-bottom: 10px !important;
-    overflow: hidden !important;
-}
-
-.hero-banner {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 1200px !important;
-    background-image: url('img/img__50AnosCPQD.png') !important;
-    background-size: cover !important; /* Força a imagem a preencher toda a largura de ponta a ponta */
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-}
-
-/* Caso exista a tag <img> física no HTML */
-.hero-banner-img, 
-.hero-banner img, 
-.hero-banner-container img {
-    width: 100% !important;
-    max-width: 1200px !important;
-    height: 380px !important;
-    object-fit: cover !important; /* Mantém o preenchimento total e elegante */
-    display: block !important;
-    margin: 0 auto !important;
-}
-
-.header-actions {
-    display: flex;
-    align-items: center;
-}
-
-.search-btn svg {
-    stroke: #42A017;
+    color: var(--cpqd-green-dark);
 }
 
 /* ===================================================
-   ESTILOS DA SEÇÃO DE ONBOARDING & HERO BANNER
+   HERO BANNER E ONBOARDING
 =================================================== */
 .top-section-wrapper {
     background-color: #ffffff;
@@ -256,7 +235,7 @@ body {
 }
 
 .proto-header h1 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-family);
     color: #1a1a1a;
     font-size: 32px;
     font-weight: 600;
@@ -269,7 +248,37 @@ body {
     margin: 0;
 }
 
-/* GUIA RÁPIDO & CARDS DE PASSOS */
+.hero-banner-container {
+    width: 100% !important;
+    max-width: 1200px !important;
+    height: 380px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background-color: #ffffff !important;
+    padding-bottom: 10px !important;
+    overflow: hidden !important;
+}
+
+.hero-banner {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 1200px !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+.hero-banner-img, .hero-banner img, .hero-banner-container img {
+    width: 100% !important;
+    max-width: 1200px !important;
+    height: 380px !important;
+    object-fit: cover !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
 .guide-steps-top, .guide-steps {
     display: flex;
     justify-content: center;
@@ -303,7 +312,7 @@ body {
 }
 
 .step-card h4 {
-    color: #00796B;
+    color: var(--cpqd-green-dark);
     font-size: 15px;
     margin-bottom: 6px;
 }
@@ -315,7 +324,9 @@ body {
     margin: 0;
 }
 
-/* --- SEÇÃO PRINCIPAL DO MAPA --- */
+/* ===================================================
+   ESTRUTURA DO MAPA E PAINEL LATERAL
+=================================================== */
 .map-section {
     position: relative;
     width: 100%;
@@ -333,7 +344,6 @@ body {
     background-color: var(--cpqd-green-light);
 }
 
-/* --- PAINEL LATERAL (FAVORITOS E FILTROS) --- */
 .map-sidebar {
     position: absolute;
     top: 30px;
@@ -343,16 +353,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
-}
-
-.sidebar-header h1 {
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.sidebar-header p {
-    font-size: 16px;
-    color: #555555;
 }
 
 .filter-card {
@@ -413,10 +413,6 @@ body {
     color: var(--white);
 }
 
-.building-list-group {
-    margin-top: 15px;
-}
-
 .building-list {
     list-style: none;
     font-size: 14px;
@@ -433,13 +429,9 @@ body {
     transition: background 0.2s, transform 0.1s;
 }
 
-.building-list li:hover {
+.building-list li:hover, .building-list li.active {
     background-color: #E0F2F1;
     transform: translateX(3px);
-}
-
-.building-list li.active {
-    background-color: #E0F2F1;
     font-weight: bold;
 }
 
@@ -453,7 +445,7 @@ body {
 .status-dot.p-lab { background-color: var(--color-orange); }
 .status-dot.p-generic { background-color: #999999; }
 
-/* --- LEGENDA DO MAPA --- */
+/* LEGENDA E RESET DO MAPA */
 .map-legend {
     position: absolute;
     top: 30px;
@@ -481,14 +473,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    padding: 0;
-    margin: 0;
 }
 
 .map-legend li {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     gap: 10px;
     font-size: 13px;
     color: #444444;
@@ -499,7 +488,6 @@ body {
     height: 14px;
     border-radius: 3px;
     flex-shrink: 0;
-    display: inline-block;
 }
 
 .legend-color.color-pd { background-color: var(--color-teal); }
@@ -508,7 +496,6 @@ body {
 .legend-color.color-verde { background-color: transparent; border: 1.5px solid #42A017; }
 .legend-color.color-acesso { background-color: #E0E0E0; border: 1px solid #CCCCCC; }
 
-/* --- BOTÃO RESET --- */
 .reset-btn {
     position: absolute;
     bottom: 30px;
@@ -532,11 +519,7 @@ body {
     transform: scale(1.05);
 }
 
-.reset-btn:active {
-    transform: scale(0.95);
-}
-
-/* --- CUSTOMIZAÇÃO DO POPUP LEAFLET --- */
+/* POPUP LEAFLET */
 .leaflet-popup-content-wrapper {
     background-color: var(--white);
     border-radius: 10px;
@@ -569,7 +552,6 @@ body {
     color: var(--text-light);
     top: 12px;
     right: 12px;
-    font-size: 16px;
 }
 
 .custom-popup-body {
@@ -581,16 +563,274 @@ body {
     gap: 15px;
 }
 
-/* --- RODAPÉ AJUSTADO --- */
+/* ===================================================
+   SERVIÇOS & GASTRONOMIA (GRID E BOTÕES DUPLOS)
+=================================================== */
+.services-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.grid-2-col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.card-restaurant {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.brand-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.brand-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.brand-title span {
+    font-size: 11px;
+    color: var(--cpqd-green-dark);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.brand-title h3 {
+    font-size: 18px;
+    color: var(--text-dark);
+}
+
+.info-row {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+/* Ações dos Cards de Gastronomia */
+.btn-link-action {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.btn-cardapio-primary {
+    background-color: var(--cpqd-green-dark);
+    color: #ffffff !important;
+}
+
+.btn-cardapio-primary:hover {
+    background-color: var(--cpqd-green-hover);
+}
+
+.btn-location-sec {
+    background-color: transparent;
+    border: 1px solid var(--cpqd-green-dark);
+    color: var(--cpqd-green-dark) !important;
+}
+
+.btn-location-sec:hover {
+    background-color: #E0F2F1;
+}
+
+/* ===================================================
+   TABELAS E CLUBE TELECAMP
+=================================================== */
+.table-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.table-card h3 {
+    font-size: 16px;
+    color: var(--cpqd-green-dark);
+    margin-bottom: 14px;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.data-table th, .data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #F9FAFB;
+    color: var(--cpqd-green-dark);
+    font-weight: 700;
+}
+
+.callout-yellow {
+    background-color: #FFF9C4;
+    border-left: 4px solid var(--color-yellow);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #5D4037;
+    margin-top: 12px;
+}
+
+/* ===================================================
+   FORMULÁRIO DE CONTATO / IDEIAS
+=================================================== */
+.form-wrapper {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.form-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    border: 1px solid var(--border-color);
+}
+
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cpqd-green-dark);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.input-group input, .input-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+    border-color: var(--cpqd-green-dark);
+}
+
+.input-group input.invalid, .input-group textarea.invalid {
+    border-color: #DC2626;
+    background-color: #FEE2E2;
+}
+
+.error-text {
+    color: #DC2626;
+    font-size: 11px;
+    margin-top: 4px;
+    display: none;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--cpqd-green-dark);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: var(--cpqd-green-hover);
+}
+
+/* Modal de confirmação do formulário. */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-card h3 {
+    color: var(--cpqd-green-dark);
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.modal-card p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* ===================================================
+   RODAPÉ (FOOTER)
+=================================================== */
 .main-footer {
     background-color: #FFFFFF;
     color: #333333;
     font-size: 14px;
     width: 100%;
+    margin-top: auto;
 }
 
 .footer-top-bar {
-    background-color: #8CE66D;
+    background-color: var(--cpqd-green-main);
     padding: 10px 40px;
     display: flex;
     justify-content: flex-end;
@@ -632,14 +872,6 @@ body {
     margin-bottom: 10px;
 }
 
-.social-icon svg {
-    transition: opacity 0.2s;
-}
-
-.social-icon:hover svg {
-    opacity: 0.6;
-}
-
 .title-serif {
     font-family: 'Georgia', serif;
     font-size: 26px;
@@ -647,29 +879,19 @@ body {
     margin-bottom: 4px;
 }
 
-.subtitle-contact {
-    font-size: 16px;
-    color: #444444;
-}
-
 .contact-col {
     text-align: left;
     font-size: 15px;
 }
 
-.contact-col a {
+.contact-col a, .contact-col p {
     color: #222222;
     text-decoration: none;
-}
-
-.contact-col p {
-    color: #222222;
     margin: 2px 0;
 }
 
 .contact-col .form-link {
     text-decoration: underline;
-    color: #222222;
 }
 
 .footer-bottom-bar {
@@ -678,14 +900,48 @@ body {
     font-size: 12px;
     color: #333333;
     border-top: 1px solid #F0F0F0;
+    text-align: center;
 }
 
+/* Eventos: estrutura preparada para dados reais, sem eventos de exemplo. */
+.events-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+}
 
-/* ================= ==========================================
+.events-calendar {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 28px;
+}
+
+.events-heading h2 {
+    color: var(--cpqd-green-dark);
+    font-size: 20px;
+    margin: 0 0 6px;
+}
+
+.events-heading p {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
+
+.calendar-placeholder {
+    border: 1px dashed #D1D5DB;
+    border-radius: 8px;
+    color: #666;
+    font-size: 14px;
+    margin-top: 22px;
+    padding: 32px 20px;
+    text-align: center;
+}
+
+/* ===================================================
    REGRAS EXCLUSIVAS DE RESPONSIVIDADE PARA CELULAR (MOBILE)
-   Nenhuma regra abaixo desta linha afeta o computador!
-   ========================================================== */
-
+=================================================== */
 @media (max-width: 768px) {
 
     body, html {
@@ -694,7 +950,7 @@ body {
         padding: 0 !important;
     }
 
-    /* 1. HEADER COMPACTO MOBILE EM UMA LINHA */
+    /* Header Compacto */
     .main-header {
         position: relative !important;
         padding: 6px 12px !important;
@@ -707,7 +963,7 @@ body {
     .header-content {
         flex-direction: column !important;
         height: auto !important;
-        gap: 4px !important;
+        gap: 6px !important;
         padding: 0 !important;
     }
 
@@ -726,14 +982,28 @@ body {
 
     .nav-item {
         font-size: 10px !important;
-        padding: 4px 2px !important;
+        padding: 6px 2px !important;
         white-space: nowrap !important;
         flex: 1 !important;
         text-align: center !important;
         border: none !important;
     }
 
-    /* 2. ADAPTAÇÃO DO BANNER 50 ANOS NO MOBILE */
+    /* Grids Adaptados para 1 Coluna no Mobile */
+    .grid-3, .grid-2-col {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .events-container {
+        padding: 24px 16px 40px;
+    }
+
+    .events-calendar {
+        padding: 20px;
+    }
+
+    /* Banner 50 Anos */
     .top-section-wrapper {
         padding: 10px 12px 4px 12px !important;
         text-align: center !important;
@@ -744,21 +1014,16 @@ body {
     }
 
     .proto-header h1 {
-        font-size: 16px !important;
+        font-size: 18px !important;
         margin: 0 0 2px 0 !important;
     }
 
-    .proto-header .subtitle {
-        font-size: 11px !important;
-        margin-bottom: 8px !important;
-    }
-
-    .hero-banner {
-        height: 120px !important;
+    .hero-banner-container, .hero-banner-img, .hero-banner img {
+        height: 140px !important;
         border-radius: 8px !important;
     }
 
-    /* 3. ÁREA DO MAPA LOGO ABAIXO DO BANNER */
+    /* Área do Mapa no Mobile */
     .map-section, #secao-mapa {
         position: relative !important;
         width: 100% !important;
@@ -777,7 +1042,7 @@ body {
         z-index: 1 !important;
     }
 
-    /* 4. CARD DE FILTROS E LUPA (PEQUENO NO CANTO SUPERIOR ESQUERDO) */
+    /* Filtros e Lupa Flutuantes */
     .map-sidebar {
         position: absolute !important;
         top: 10px !important;
@@ -795,20 +1060,6 @@ body {
         padding: 6px 8px !important;
         border: 1px solid rgba(0, 0, 0, 0.1) !important;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
-        margin: 0 !important;
-    }
-
-    .sidebar-header h1, .sidebar-header p {
-        display: none !important;
-    }
-
-    .sidebar-search-box {
-        margin-bottom: 6px !important;
-    }
-
-    .sidebar-search-box input {
-        padding: 4px 6px 4px 24px !important;
-        font-size: 9px !important;
     }
 
     .filter-card {
@@ -821,18 +1072,10 @@ body {
         display: none !important;
     }
 
-    .filter-group h3, .building-list-group h3 {
-        font-size: 8px !important;
-        margin: 2px 0 !important;
-        color: #00796B !important;
-        font-weight: 700 !important;
-    }
-
     .tag-container {
         display: flex !important;
         flex-wrap: wrap !important;
         gap: 2px !important;
-        margin-bottom: 4px !important;
     }
 
     .tag-btn {
@@ -841,19 +1084,7 @@ body {
         border-radius: 6px !important;
     }
 
-    .building-list {
-        max-height: 45px !important;
-        overflow-y: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    .building-list li {
-        padding: 2px 0 !important;
-        font-size: 9px !important;
-    }
-
-    /* 5. LEGENDA FIXA (CANTO INFERIOR ESQUERDO) */
+    /* Legenda Fixa */
     .map-legend {
         position: absolute !important;
         bottom: 12px !important;
@@ -862,63 +1093,34 @@ body {
         right: auto !important;
         width: 160px !important;
         max-width: 50vw !important;
-        height: auto !important;
         max-height: 85px !important;
         overflow-y: auto !important;
         z-index: 500 !important;
         background: rgba(255, 255, 255, 0.95) !important;
-        backdrop-filter: blur(8px) !important;
         padding: 6px 8px !important;
         border-radius: 8px !important;
-        border: 1px solid rgba(0, 0, 0, 0.1) !important;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
-        margin: 0 !important;
     }
 
     .map-legend h3 {
         font-size: 8px !important;
-        margin: 0 0 2px 0 !important;
-        color: #333 !important;
-        font-weight: 700 !important;
         text-align: left !important;
-    }
-
-    .map-legend ul {
-        margin: 0 !important;
-        padding: 0 !important;
-        list-style: none !important;
     }
 
     .map-legend li {
         font-size: 8px !important;
-        padding: 1px 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 4px !important;
-        color: #333 !important;
     }
 
-    /* 6. BOTÃO RESETAR VISÃO (CANTO INFERIOR DIREITO) */
+    /* Botão Resetar Visão */
     .reset-btn, #reset-map-btn {
         position: absolute !important;
         bottom: 12px !important;
         right: 10px !important;
-        top: auto !important;
-        left: auto !important;
         width: 34px !important;
         height: 34px !important;
         z-index: 501 !important;
-        background: #ffffff !important;
-        border-radius: 50% !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        border: none !important;
-        margin: 0 !important;
     }
 
-    /* RODAPÉ MOBILE */
+    /* Rodapé Mobile */
     .footer-content {
         flex-direction: column !important;
         padding: 20px !important;

@@ -5,217 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CPQD 360 - Compartilhe Conosco</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* ESTILOS DE LAYOUT VERTICAL E FUNDO BRANCO */
-        body {
-            background-color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            min-height: 100vh;
-            display: block; /* Garante alinhamento vertical normal */
-        }
-
-        /* CABEÇALHO PADRÃO DO TOPO */
-        .main-header {
-            background-color: #ffffff;
-            border-bottom: 1px solid #E5E5E5;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 0 30px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
-            height: 65px;
-        }
-
-        .logo-cpqd {
-            height: 38px;
-            width: auto;
-            display: block;
-        }
-
-        .main-nav {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            gap: 0;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            padding: 0 20px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #00796B;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            transition: background-color 0.2s ease, color 0.2s ease;
-        }
-
-        .nav-item:hover {
-            background-color: #F4F6F6;
-        }
-
-        .nav-item.active {
-            color: #00BFA5;
-        }
-
-        /* CONTAINER CENTRALIZADO DO FORMULÁRIO */
-        .page-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px 60px 20px;
-        }
-
-        .form-container {
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #E5E5E5;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .form-container h1 {
-            color: #00796B;
-            margin-bottom: 8px;
-            font-size: 26px;
-            margin-top: 0;
-        }
-
-        .form-container p {
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
-            font-weight: bold;
-            font-size: 13px;
-            color: #333;
-        }
-
-        .form-group input, .form-group textarea {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 14px;
-            outline: none;
-            box-sizing: border-box;
-            width: 100%;
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            border-color: #00BFA5;
-        }
-
-        .submit-btn {
-            background-color: #00BFA5;
-            color: #fff;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.2s;
-        }
-
-        .submit-btn:hover {
-            background-color: #00897B;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 15px;
-            color: #00796B;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        /* MODAL DE SUCESSO */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .modal-card {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 16px;
-            text-align: center;
-            max-width: 380px;
-            width: 90%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .modal-card h3 {
-            color: #00796B;
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .modal-card p {
-            color: #555;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .modal-btn {
-            background-color: #00BFA5;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-    </style>
 </head>
 <body>
 
@@ -229,7 +18,7 @@
             <nav class="main-nav">
                 <a href="index.html#secao-mapa" class="nav-item">MAPA INTERATIVO</a>
                 <a href="servicos.html" class="nav-item">SERVIÇOS & AMENITIES</a>
-                <a href="formulario.html" class="nav-item active">COMPARTILHAR IDEIAS</a>
+                <a href="eventos.html" class="nav-item">EVENTOS</a>
             </nav>
         </div>
     </header>
@@ -238,31 +27,31 @@
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { showSuccessModal(); }"></iframe>
 
     <!-- CONTEÚDO DO FORMULÁRIO CENTRALIZADO -->
-    <div class="page-wrapper">
-        <div class="form-container">
-            <h1>Entre em Contato</h1>
-            <p>Quer compartilhar algo conosco? Preencha o formulário abaixo.</p>
+    <div class="form-wrapper">
+        <div class="form-card">
+            <h2>Entre em Contato</h2>
+            <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Quer compartilhar algo conosco? Preencha o formulário abaixo.</p>
 
             <form id="feedbackForm" action="https://script.google.com/a/macros/cpqd.com.br/s/AKfycbyOE9tB6pxThtfxHYi4LF42sbri69fXdZA8i3UZBlTEV8pIYf1Lv2pQkNxt3ZUedWWzcw/exec" method="POST" target="hidden_iframe" onsubmit="submitted=true;">
-                <div class="form-group">
-                    <label for="nome">Nome Completo</label>
+                <div class="input-group">
+                    <label for="nome">Nome Completo *</label>
                     <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="seuemail@cpqd.com" required>
+                <div class="input-group">
+                    <label for="email">E-mail *</label>
+                    <input type="email" id="email" name="email" placeholder="seuemail@cpqd.com.br" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="mensagem">Sua Mensagem / Sugestão</label>
+                <div class="input-group">
+                    <label for="mensagem">Sua Mensagem / Sugestão *</label>
                     <textarea id="mensagem" name="mensagem" rows="5" placeholder="Escreva aqui..." required></textarea>
                 </div>
 
-                <button type="submit" id="btnSubmit" class="submit-btn">Enviar Mensagem</button>
+                <button type="submit" id="btnSubmit" class="btn-submit">Enviar Mensagem</button>
             </form>
 
-            <a href="index.html#secao-mapa" class="back-link">← Voltar para o Mapa</a>
+            <a href="index.html#secao-mapa" style="display: inline-block; margin-top: 15px; color: #00796B; text-decoration: none; font-size: 13px; font-weight: 600;">← Voltar para o Mapa</a>
         </div>
     </div>
 
@@ -271,9 +60,16 @@
         <div class="modal-card">
             <h3>Mensagem Enviada!</h3>
             <p>Obrigado pelo seu feedback. Sua mensagem foi salva com sucesso e nossa equipe irá analisá-la.</p>
-            <button class="modal-btn" onclick="redirectToMap()">Voltar para o Mapa</button>
+            <button class="btn-submit" onclick="redirectToMap()">Voltar para o Mapa</button>
         </div>
     </div>
+
+    <!-- RODAPÉ -->
+    <footer class="main-footer">
+        <div class="footer-bottom-bar">
+            <p>Bússola da Jornada - CPQD 360 © All Rights Reserved</p>
+        </div>
+    </footer>
 
     <script>
         var submitted = false;

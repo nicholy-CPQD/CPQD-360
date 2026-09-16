@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const bounds = [[0, 0], [imageH, imageW]];
 
-    // Tenta carregar a imagem se existir
+    // A imagem-base é uma dependência do projeto. Não há substituto visual
+    // enquanto o asset original não estiver disponível.
     if (imageUrl) {
         L.imageOverlay(imageUrl, bounds).addTo(map);
     }
@@ -142,24 +143,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- 6. BARRA DE PESQUISA MINIMALISTA ---
-    const searchToggleBtn = document.getElementById('search-toggle-btn');
-    const searchContainer = document.getElementById('search-container');
     const searchInput = document.getElementById('search-input');
     const searchResultsList = document.getElementById('search-results-list');
 
-    if (searchToggleBtn && searchContainer) {
-        searchToggleBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            searchContainer.classList.toggle('active');
-
-            if (searchContainer.classList.contains('active')) {
-                searchInput.focus();
-            } else {
-                searchInput.value = '';
-                searchResultsList.classList.remove('has-results');
-            }
-        });
-
+    if (searchInput && searchResultsList) {
         searchInput.addEventListener('input', function() {
             const query = this.value.toLowerCase().trim();
             searchResultsList.innerHTML = '';
@@ -185,7 +172,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             map.flyTo(targetMarker.getLatLng(), 1);
                             targetMarker.openPopup();
                             
-                            searchContainer.classList.remove('active');
                             searchResultsList.classList.remove('has-results');
                             searchInput.value = '';
                         }
@@ -198,8 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         document.addEventListener('click', function(e) {
-            if (!searchContainer.contains(e.target)) {
-                searchContainer.classList.remove('active');
+            if (!searchInput.closest('.map-sidebar').contains(e.target)) {
                 searchResultsList.classList.remove('has-results');
             }
         });
@@ -211,6 +196,25 @@ document.addEventListener('DOMContentLoaded', function() {
         resetBtn.addEventListener('click', function() {
             map.fitBounds(bounds);
         });
+    }
+
+    // Navegação direta para uma localização já cadastrada no mapa. Parâmetros
+    // sem correspondência são preservados na URL, mas não geram pontos fictícios.
+    const requestedLocation = new URLSearchParams(window.location.search).get('loc');
+    if (requestedLocation) {
+        const normalizedLocation = requestedLocation.trim().toLowerCase();
+        const target = prediosData.find(p =>
+            p.id.toLowerCase() === normalizedLocation ||
+            p.nome.toLowerCase() === normalizedLocation
+        );
+
+        if (target && markersGroup[target.id]) {
+            const marker = markersGroup[target.id];
+            map.flyTo(marker.getLatLng(), 1);
+            marker.openPopup();
+        } else {
+            console.warn(`Localização "${requestedLocation}" não possui ponto cadastrado no mapa.`);
+        }
     }
 
 });
