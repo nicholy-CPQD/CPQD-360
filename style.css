@@ -115,6 +115,27 @@ body {
     z-index: 1;
 }
 
+.nav-item.active::before {
+    content: "";
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    margin-left: 11%;
+    width: 4px;
+    height: 4px;
+    background-color: #1a1a1a;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+/* Ajuste da barra de navegação do header no mobile */
+@media (max-width: 768px) {
+    .nav-item.active::after,
+    .nav-item.active::before {
+        bottom: -0.3px;
+    }
+}
+
 .header-actions {
     display: flex;
     align-items: center;
