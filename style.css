@@ -1,3 +1,6 @@
+/* Fonte Poppins do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 /* ===================================================
    RT01, RT04: CSS BASE E VARIÁVEIS (PADRÃO CPQD)
 =================================================== */
@@ -14,7 +17,7 @@
     --white: #FFFFFF;
     --bg-card: rgba(255, 255, 255, 0.95);
     --border-color: #E5E7EB;
-    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-family: 'Poppins',sans-serif;
 }
 
 * {
@@ -876,7 +879,7 @@ body {
 }
 
 .title-serif {
-    font-family: 'Georgia', serif;
+    font-weight: 600;
     font-size: 26px;
     color: #222222;
     margin-bottom: 4px;
