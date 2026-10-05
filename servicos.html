@@ -40,13 +40,13 @@
         </div>
 
         <!-- ABAS DE NAVEGAÇÃO PRINCIPAL -->
-        <div class="tab-switcher">
-            <button class="tab-btn active" onclick="switchTab('gastronomia', this)">Gastronomia & Conveniência</button>
-            <button class="tab-btn" onclick="switchTab('telecamp', this)">Clube Telecamp & Esportes</button>
+        <div class="tab-switcher" role="tablist" aria-label="Categorias de serviços">
+            <button class="tab-btn active" id="tab-btn-gastronomia" type="button" role="tab" aria-selected="true" aria-controls="tab-gastronomia" onclick="switchTab('gastronomia', this)">Gastronomia & Conveniência</button>
+            <button class="tab-btn" id="tab-btn-telecamp" type="button" role="tab" aria-selected="false" aria-controls="tab-telecamp" onclick="switchTab('telecamp', this)">Clube, Lazer & Esportes</button>
         </div>
 
         <!-- ABA 1: GASTRONOMIA -->
-        <div id="tab-gastronomia" class="tab-content active">
+        <div id="tab-gastronomia" class="tab-content active" role="tabpanel" aria-labelledby="tab-btn-gastronomia">
             <div class="grid-3">
                 
                 <!-- LE CAFÉ -->
@@ -166,7 +166,7 @@
         </div>
 
         <!-- ABA 2: CLUBE TELECAMP -->
-        <div id="tab-telecamp" class="tab-content">
+        <div id="tab-telecamp" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-telecamp">
             <h2 style="font-size: 20px; color: #00796B; margin: 25px 0 15px 0;">Horários de Funcionamento do Clube</h2>
             <div class="grid-2-col">
                 <div class="table-card searchable-item">
@@ -367,10 +367,14 @@
         // ALTERNÂNCIA DE ABAS
         function switchTab(tabName, element) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            });
 
             document.getElementById('tab-' + tabName).classList.add('active');
             element.classList.add('active');
+            element.setAttribute('aria-selected', 'true');
         }
 
         // LUPA DE BUSCA EXPANSÍVEL
