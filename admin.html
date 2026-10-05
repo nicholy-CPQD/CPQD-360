@@ -156,7 +156,8 @@
 <!-- SDKs do Firebase (Modular v9/v10) -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     // Configuração do seu projeto
     const firebaseConfig = {
@@ -172,6 +173,14 @@
     // Inicializa Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const validScopes = {
+        admin_geral: ['global'],
+        restaurante: ['leCafe', 'thiane', 'laranjaLima', 'villani'],
+        telecamp: ['telecamp'],
+        polis: ['polis']
+    };
 
     // Função de Login Real
     window.handleLogin = async function(e) {
@@ -184,12 +193,33 @@
 
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            // Salva a sessão do usuário
+            const userDoc = await getDoc(doc(db, 'usuarios', userCredential.user.uid));
+
+            if (!userDoc.exists()) {
+                await signOut(auth);
+                errorMsg.innerText = 'Este usuário não possui cadastro administrativo ativo.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            const profile = userDoc.data();
+            if (profile.status !== 'ativo' || !validScopes[profile.perfil]?.includes(profile.escopo)) {
+                await signOut(auth);
+                errorMsg.innerText = profile.status === 'bloqueado'
+                    ? 'Este usuário está bloqueado. Procure o administrador.'
+                    : 'O cadastro administrativo possui perfil, escopo ou status inválido.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
             sessionStorage.setItem('userLogado', userCredential.user.email);
             window.location.href = 'painel-admin.html';
         } catch (error) {
+            await signOut(auth);
             console.error("Erro na autenticação:", error);
-            errorMsg.innerText = "E-mail ou senha incorretos ou usuário não cadastrado.";
+            errorMsg.innerText = error.code === 'permission-denied'
+                ? 'Não foi possível validar seu cadastro administrativo no Firestore.'
+                : 'E-mail ou senha incorretos ou usuário não cadastrado.';
             errorMsg.style.display = 'block';
         }
     }

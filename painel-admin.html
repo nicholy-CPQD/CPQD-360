@@ -183,8 +183,8 @@
         <div class="dashboard-card">
             <div class="dashboard-header">
                 <div>
-                    <h2>Gestão de Cardápio</h2>
-                    <p>Atualize as refeições e serviços exibidos aos usuários</p>
+                    <h2 id="panel-title">Painel Administrativo</h2>
+                    <p id="panel-description">Acesso conforme o perfil e escopo cadastrados</p>
                 </div>
                 <span id="user-badge" class="user-badge">Parceiro Ativo</span>
             </div>
@@ -193,17 +193,15 @@
                 Cardápio atualizado com sucesso! As alterações já estão visíveis no site público.
             </div>
 
+            <div id="profile-message" class="alert-success" style="display:none;">
+                Seu acesso foi validado. A área deste perfil será disponibilizada em uma próxima etapa.
+            </div>
+
 <form id="menuForm" onsubmit="handleSaveMenu(event)">
     <div class="form-section">
-        <h3>1. Selecionar Estabelecimento</h3>
+        <h3>Meu Restaurante</h3>
         <div class="form-group">
-            <label for="restaurant">Restaurante / Amenity</label>
-            <select id="restaurant" required>
-                <option value="lecafe">Le Café (Restaurante Central)</option>
-                <option value="thiane">Thiane Gastronomia</option>
-                <option value="laranjalima">Laranja Lima Conveniência</option>
-                <option value="villani">Villani</option>
-            </select>
+            <p id="restaurant-name" style="margin:0; color:#374151; font-size:14px;"></p>
         </div>
     </div>
 
@@ -229,7 +227,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCMIs6nsvccmGdhzsad8d_CjAQLCUgV8gg",
@@ -245,19 +243,69 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    const restaurantByScope = {
+        leCafe: { id: 'lecafe', name: 'Le Café' },
+        thiane: { id: 'thiane', name: 'Thiane Gastronomia' },
+        laranjaLima: { id: 'laranjalima', name: 'Laranja Lima Conveniência' },
+        villani: { id: 'villani', name: 'Villani' }
+    };
+    const validScopes = {
+        admin_geral: ['global'],
+        restaurante: Object.keys(restaurantByScope),
+        telecamp: ['telecamp'],
+        polis: ['polis']
+    };
+    let authorizedProfile = null;
+    let restaurantId = null;
+
     // Validação de sessão do parceiro
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         if (!user) {
             window.location.href = 'admin.html';
-        } else {
-            document.getElementById('user-badge').innerText = user.email;
+            return;
+        }
+
+        try {
+            const userDoc = await getDoc(doc(db, 'usuarios', user.uid));
+            if (!userDoc.exists()) {
+                await signOut(auth);
+                window.location.href = 'admin.html?acesso=nao-cadastrado';
+                return;
+            }
+
+            const profile = userDoc.data();
+            if (profile.status !== 'ativo' || !validScopes[profile.perfil]?.includes(profile.escopo)) {
+                await signOut(auth);
+                window.location.href = 'admin.html?acesso=invalido';
+                return;
+            }
+
+            authorizedProfile = profile;
+            document.getElementById('user-badge').innerText = profile.nome || user.email;
+
+            if (profile.perfil === 'restaurante') {
+                restaurantId = restaurantByScope[profile.escopo].id;
+                document.getElementById('restaurant-name').innerText = restaurantByScope[profile.escopo].name;
+                document.getElementById('panel-title').innerText = 'Gestão de Cardápio';
+                document.getElementById('panel-description').innerText = 'Atualize os cardápios do seu restaurante';
+            } else {
+                document.getElementById('menuForm').style.display = 'none';
+                document.getElementById('profile-message').style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Erro ao validar cadastro administrativo:', error);
+            await signOut(auth);
+            window.location.href = 'admin.html?acesso=erro';
         }
     });
 
     // Salvar Link no Firestore
     window.handleSaveMenu = async function(e) {
         e.preventDefault();
-        const restaurant = document.getElementById('restaurant').value;
+        if (authorizedProfile?.perfil !== 'restaurante' || !restaurantId) {
+            alert('Seu perfil não tem permissão para publicar cardápios.');
+            return;
+        }
         const menuLink = document.getElementById('menuLink').value;
         const alertBox = document.getElementById('success-alert');
         const btnSave = document.querySelector('.btn-save');
@@ -272,7 +320,7 @@
             btnSave.disabled = true;
 
             // Grava o link no banco em tempo real
-            await setDoc(doc(db, "cardapios", restaurant), {
+            await setDoc(doc(db, "cardapios", restaurantId), {
                 link: menuLink,
                 atualizadoEm: new Date().toISOString()
             });

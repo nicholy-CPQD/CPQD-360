@@ -1,0 +1,83 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userPath(uid) {
+      return /databases/$(database)/documents/usuarios/$(uid);
+    }
+
+    function hasUserRecord(uid) {
+      return exists(userPath(uid));
+    }
+
+    function callerProfile() {
+      return get(userPath(request.auth.uid)).data;
+    }
+
+    function validProfileScope(profile, scope) {
+      return (profile == 'admin_geral' && scope == 'global')
+        || (profile == 'restaurante' && scope in ['leCafe', 'thiane', 'laranjaLima', 'villani'])
+        || (profile == 'telecamp' && scope == 'telecamp')
+        || (profile == 'polis' && scope == 'polis');
+    }
+
+    function activeAdminGeneral() {
+      return signedIn()
+        && hasUserRecord(request.auth.uid)
+        && callerProfile().status == 'ativo'
+        && callerProfile().perfil == 'admin_geral'
+        && callerProfile().escopo == 'global';
+    }
+
+    function activeRestaurant(scope) {
+      return signedIn()
+        && hasUserRecord(request.auth.uid)
+        && callerProfile().status == 'ativo'
+        && callerProfile().perfil == 'restaurante'
+        && callerProfile().escopo == scope;
+    }
+
+    function validUserDocument(data) {
+      return data.keys().hasAll(['nome', 'email', 'perfil', 'escopo', 'status'])
+        && data.keys().hasOnly(['nome', 'email', 'perfil', 'escopo', 'status'])
+        && data.nome is string
+        && data.email is string
+        && data.perfil is string
+        && data.escopo is string
+        && data.status in ['ativo', 'bloqueado']
+        && validProfileScope(data.perfil, data.escopo);
+    }
+
+    function ownsCardapio(cardapioId) {
+      return (activeRestaurant('leCafe') && cardapioId in ['leCafe', 'lecafe'])
+        || (activeRestaurant('thiane') && cardapioId == 'thiane')
+        || (activeRestaurant('laranjaLima') && cardapioId in ['laranjaLima', 'laranjalima'])
+        || (activeRestaurant('villani') && cardapioId == 'villani');
+    }
+
+    match /usuarios/{uid} {
+      // O próprio usuário pode consultar apenas seu cadastro; Admin Geral pode consultar usuários.
+      allow get: if (signedIn() && request.auth.uid == uid) || activeAdminGeneral();
+      allow list: if activeAdminGeneral();
+
+      // O Admin Geral pode criar e editar cadastros, mas não excluir o histórico de usuários.
+      allow create, update: if activeAdminGeneral()
+        && validUserDocument(request.resource.data);
+      allow delete: if false;
+    }
+
+    match /cardapios/{cardapioId} {
+      // A página pública atual consulta a coleção sem autenticação.
+      // Usuários autenticados de Restaurante só podem ler seu próprio documento.
+      allow get: if request.auth == null || ownsCardapio(cardapioId);
+      allow list: if request.auth == null;
+
+      // Criar, editar e excluir ficam restritos ao restaurante ativo dono do documento.
+      allow create, update, delete: if ownsCardapio(cardapioId);
+    }
+  }
+}
