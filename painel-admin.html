@@ -164,6 +164,92 @@
             margin-bottom: 20px;
             display: none;
         }
+
+        .panel-navigation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .panel-nav-button {
+            min-height: 42px;
+            padding: 9px 14px;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #374151;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+        }
+
+        .panel-nav-button:hover {
+            border-color: #00796B;
+            color: #00796B;
+        }
+
+        .panel-nav-button.active {
+            border-color: #00796B;
+            background: #E0F2F1;
+            color: #00695C;
+        }
+
+        .panel-nav-button:focus-visible {
+            outline: 2px solid #00796B;
+            outline-offset: 2px;
+        }
+
+        .panel-view[hidden],
+        .panel-navigation[hidden] {
+            display: none;
+        }
+
+        .panel-structure h3 {
+            margin: 0 0 8px;
+            color: #00796B;
+            font-size: 16px;
+        }
+
+        .panel-structure p {
+            margin: 0;
+            color: #6B7280;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .dashboard-container {
+                margin: 20px auto;
+                padding: 0 12px;
+            }
+
+            .dashboard-card {
+                padding: 20px 16px;
+            }
+
+            .dashboard-header {
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .panel-navigation {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 6px;
+            }
+
+            .panel-nav-button {
+                min-width: 0;
+                min-height: 46px;
+                padding: 8px 6px;
+                overflow-wrap: anywhere;
+            }
+        }
     </style>
 </head>
 <body>
@@ -186,16 +272,25 @@
                     <h2 id="panel-title">Painel Administrativo</h2>
                     <p id="panel-description">Acesso conforme o perfil e escopo cadastrados</p>
                 </div>
-                <span id="user-badge" class="user-badge">Parceiro Ativo</span>
+                <span id="user-badge" class="user-badge">Acesso autenticado</span>
             </div>
 
-            <div id="success-alert" class="alert-success">
-                Cardápio atualizado com sucesso! As alterações já estão visíveis no site público.
-            </div>
+            <nav id="panel-navigation" class="panel-navigation" aria-label="Navegação do painel" hidden></nav>
 
-            <div id="profile-message" class="alert-success" style="display:none;">
-                Seu acesso foi validado. A área deste perfil será disponibilizada em uma próxima etapa.
-            </div>
+            <section id="panel-view-dashboard" class="panel-view panel-structure" aria-live="polite" hidden>
+                <h3>Dashboard</h3>
+                <p>Área estrutural do painel. O conteúdo será disponibilizado nas etapas correspondentes.</p>
+            </section>
+
+            <section id="panel-view-placeholder" class="panel-view panel-structure" aria-live="polite" hidden>
+                <h3 id="section-placeholder-title"></h3>
+                <p>Esta seção está preparada para receber sua funcionalidade na etapa correspondente.</p>
+            </section>
+
+            <section id="panel-view-cardapios" class="panel-view" hidden>
+                <div id="success-alert" class="alert-success" role="status">
+                    Cardápio atualizado com sucesso! As alterações já estão visíveis no site público.
+                </div>
 
 <form id="menuForm" onsubmit="handleSaveMenu(event)">
     <div class="form-section">
@@ -215,6 +310,7 @@
 
     <button type="submit" class="btn-save">Publicar Novo Cardápio</button>
 </form>
+            </section>
         </div>
     </div>
 
@@ -255,8 +351,91 @@
         telecamp: ['telecamp'],
         polis: ['polis']
     };
+    const panelSections = {
+        admin_geral: {
+            title: 'Admin Geral',
+            sections: [
+                { id: 'dashboard', label: 'Dashboard' },
+                { id: 'usuarios', label: 'Usuários' },
+                { id: 'servicos', label: 'Serviços & Amenities' },
+                { id: 'eventos', label: 'Eventos' },
+                { id: 'calendario', label: 'Calendário Corporativo' }
+            ]
+        },
+        restaurante: {
+            title: 'Restaurante',
+            sections: [
+                { id: 'dashboard', label: 'Dashboard' },
+                { id: 'meu-restaurante', label: 'Meu Restaurante' },
+                { id: 'cardapios', label: 'Cardápios' }
+            ]
+        },
+        telecamp: {
+            title: 'Telecamp',
+            sections: [
+                { id: 'dashboard', label: 'Dashboard' },
+                { id: 'meu-telecamp', label: 'Meu Telecamp' },
+                { id: 'aulas', label: 'Aulas' },
+                { id: 'valores', label: 'Valores' }
+            ]
+        },
+        polis: {
+            title: 'Pólis',
+            sections: [
+                { id: 'dashboard', label: 'Dashboard' },
+                { id: 'eventos', label: 'Eventos' },
+                { id: 'calendario', label: 'Calendário Corporativo' }
+            ]
+        }
+    };
     let authorizedProfile = null;
     let restaurantId = null;
+
+    function showPanelSection(section) {
+        document.querySelectorAll('.panel-view').forEach(view => {
+            view.hidden = true;
+        });
+
+        const viewId = section.id === 'dashboard'
+            ? 'panel-view-dashboard'
+            : section.id === 'cardapios'
+                ? 'panel-view-cardapios'
+                : 'panel-view-placeholder';
+        const targetView = document.getElementById(viewId);
+        if (viewId === 'panel-view-placeholder') {
+            document.getElementById('section-placeholder-title').innerText = section.label;
+        }
+        targetView.hidden = false;
+
+        document.querySelectorAll('.panel-nav-button').forEach(button => {
+            const isActive = button.dataset.sectionId === section.id;
+            button.classList.toggle('active', isActive);
+            if (isActive) button.setAttribute('aria-current', 'page');
+            else button.removeAttribute('aria-current');
+        });
+    }
+
+    function buildPanelNavigation(profileName) {
+        const panel = panelSections[profileName];
+        const navigation = document.getElementById('panel-navigation');
+        navigation.replaceChildren();
+
+        panel.sections.forEach(section => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'panel-nav-button';
+            button.textContent = section.label;
+            button.dataset.sectionId = section.id;
+            button.addEventListener('click', () => showPanelSection(section));
+            navigation.appendChild(button);
+        });
+
+        navigation.hidden = false;
+        const defaultSection = profileName === 'restaurante'
+            ? panel.sections.find(section => section.id === 'cardapios')
+            : panel.sections[0];
+        showPanelSection(defaultSection);
+    }
 
     // Validação de sessão do parceiro
     onAuthStateChanged(auth, async (user) => {
@@ -282,15 +461,14 @@
 
             authorizedProfile = profile;
             document.getElementById('user-badge').innerText = profile.nome || user.email;
+            const panel = panelSections[profile.perfil];
+            document.getElementById('panel-title').innerText = `Painel ${panel.title}`;
+            document.getElementById('panel-description').innerText = 'Navegação conforme seu perfil e escopo';
+            buildPanelNavigation(profile.perfil);
 
             if (profile.perfil === 'restaurante') {
                 restaurantId = restaurantByScope[profile.escopo].id;
                 document.getElementById('restaurant-name').innerText = restaurantByScope[profile.escopo].name;
-                document.getElementById('panel-title').innerText = 'Gestão de Cardápio';
-                document.getElementById('panel-description').innerText = 'Atualize os cardápios do seu restaurante';
-            } else {
-                document.getElementById('menuForm').style.display = 'none';
-                document.getElementById('profile-message').style.display = 'block';
             }
         } catch (error) {
             console.error('Erro ao validar cadastro administrativo:', error);
