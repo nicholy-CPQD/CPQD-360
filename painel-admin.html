@@ -222,6 +222,132 @@
             line-height: 1.5;
         }
 
+        .user-management-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .user-management-card {
+            min-width: 0;
+            padding: 20px;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .user-management-card h3,
+        .user-list-heading {
+            margin: 0 0 16px;
+            color: #00796B;
+            font-size: 16px;
+        }
+
+        .user-status-note {
+            margin: 0 0 18px;
+            color: #4B5563;
+            font-size: 13px;
+        }
+
+        .user-form-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .user-form-actions .btn-save {
+            flex: 1;
+            width: auto;
+        }
+
+        .btn-secondary,
+        .user-action-button {
+            min-height: 40px;
+            padding: 8px 12px;
+            border: 1px solid #00796B;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #00796B;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .user-action-button:hover,
+        .btn-secondary:hover {
+            background: #E0F2F1;
+        }
+
+        .user-action-button:disabled,
+        .btn-secondary:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+        }
+
+        .user-action-button.block-action {
+            border-color: #B91C1C;
+            color: #B91C1C;
+        }
+
+        .user-management-feedback {
+            display: none;
+            margin: 0 0 18px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .user-management-feedback.success {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .user-management-feedback.error {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .user-list-heading {
+            margin-top: 24px;
+        }
+
+        .user-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .user-table {
+            width: 100%;
+            min-width: 720px;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .user-table th,
+        .user-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #E5E7EB;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .user-table th {
+            background: #F9FAFB;
+            color: #00695C;
+        }
+
+        .user-table-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .user-self-label {
+            color: #6B7280;
+            font-size: 12px;
+        }
+
         @media (max-width: 600px) {
             .dashboard-container {
                 margin: 20px auto;
@@ -248,6 +374,15 @@
                 min-height: 46px;
                 padding: 8px 6px;
                 overflow-wrap: anywhere;
+            }
+
+            .user-management-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .user-management-card {
+                padding: 16px;
             }
         }
     </style>
@@ -287,6 +422,103 @@
                 <p>Esta seção está preparada para receber sua funcionalidade na etapa correspondente.</p>
             </section>
 
+            <section id="panel-view-usuarios" class="panel-view" hidden>
+                <div id="user-management-feedback" class="user-management-feedback" role="status" aria-live="polite"></div>
+
+                <div class="user-management-grid">
+                    <div class="user-management-card">
+                        <h3>Criar usuário</h3>
+                        <form id="create-user-form">
+                            <div class="form-group">
+                                <label for="new-user-name">Nome</label>
+                                <input type="text" id="new-user-name" required maxlength="120">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-user-email">E-mail corporativo</label>
+                                <input type="email" id="new-user-email" required autocomplete="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-user-profile">Perfil</label>
+                                <select id="new-user-profile" required>
+                                    <option value="">Selecione um perfil</option>
+                                    <option value="admin_geral">Admin Geral</option>
+                                    <option value="restaurante">Restaurante</option>
+                                    <option value="telecamp">Telecamp</option>
+                                    <option value="polis">Pólis</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-user-scope">Escopo</label>
+                                <select id="new-user-scope" required disabled>
+                                    <option value="">Selecione primeiro um perfil</option>
+                                </select>
+                            </div>
+                            <p class="user-status-note">Status inicial: <strong>Ativo</strong>. Um email do Firebase será enviado para a pessoa configurar a própria senha.</p>
+                            <button type="submit" class="btn-save">Criar usuário</button>
+                        </form>
+                    </div>
+
+                    <div class="user-management-card">
+                        <h3>Editar usuário</h3>
+                        <p id="edit-user-empty" class="user-status-note">Selecione “Editar” em um cadastro da lista.</p>
+                        <form id="edit-user-form" hidden>
+                            <input type="hidden" id="edit-user-uid">
+                            <div class="form-group">
+                                <label for="edit-user-name">Nome</label>
+                                <input type="text" id="edit-user-name" required maxlength="120">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-user-email">E-mail</label>
+                                <input type="email" id="edit-user-email" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-user-profile">Perfil</label>
+                                <select id="edit-user-profile" required>
+                                    <option value="admin_geral">Admin Geral</option>
+                                    <option value="restaurante">Restaurante</option>
+                                    <option value="telecamp">Telecamp</option>
+                                    <option value="polis">Pólis</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-user-scope">Escopo</label>
+                                <select id="edit-user-scope" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-user-status">Status</label>
+                                <select id="edit-user-status" required>
+                                    <option value="ativo">Ativo</option>
+                                    <option value="bloqueado">Bloqueado</option>
+                                </select>
+                            </div>
+                            <div class="user-form-actions">
+                                <button type="submit" class="btn-save">Salvar alterações</button>
+                                <button type="button" id="cancel-user-edit" class="btn-secondary">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <h3 class="user-list-heading">Usuários cadastrados</h3>
+                <div class="user-table-wrap">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Perfil</th>
+                                <th>Escopo</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-list-body">
+                            <tr><td colspan="6">Carregando usuários...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
             <section id="panel-view-cardapios" class="panel-view" hidden>
                 <div id="success-alert" class="alert-success" role="status">
                     Cardápio atualizado com sucesso! As alterações já estão visíveis no site público.
@@ -322,8 +554,9 @@
 <!-- SDKs do Firebase -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, getDocs, onSnapshot, collection, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCMIs6nsvccmGdhzsad8d_CjAQLCUgV8gg",
@@ -338,6 +571,9 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
+    const functions = getFunctions(app);
+    const createAdminUser = httpsCallable(functions, 'createAdminUser');
+    const updateAdminUser = httpsCallable(functions, 'updateAdminUser');
 
     const restaurantByScope = {
         leCafe: { id: 'lecafe', name: 'Le Café' },
@@ -351,6 +587,22 @@
         telecamp: ['telecamp'],
         polis: ['polis']
     };
+    const profileLabels = {
+        admin_geral: 'Admin Geral',
+        restaurante: 'Restaurante',
+        telecamp: 'Telecamp',
+        polis: 'Pólis'
+    };
+    const scopeLabels = {
+        global: 'Global',
+        leCafe: 'Le Café',
+        thiane: 'Thiane',
+        laranjaLima: 'Laranja Lima',
+        villani: 'Villani',
+        telecamp: 'Telecamp',
+        polis: 'Pólis'
+    };
+    let usersCache = [];
     const panelSections = {
         admin_geral: {
             title: 'Admin Geral',
@@ -390,6 +642,14 @@
     };
     let authorizedProfile = null;
     let restaurantId = null;
+    let profileSubscription = null;
+
+    function stopProfileSubscription() {
+        if (profileSubscription) {
+            profileSubscription();
+            profileSubscription = null;
+        }
+    }
 
     function showPanelSection(section) {
         document.querySelectorAll('.panel-view').forEach(view => {
@@ -398,6 +658,8 @@
 
         const viewId = section.id === 'dashboard'
             ? 'panel-view-dashboard'
+            : section.id === 'usuarios'
+                ? 'panel-view-usuarios'
             : section.id === 'cardapios'
                 ? 'panel-view-cardapios'
                 : 'panel-view-placeholder';
@@ -413,6 +675,8 @@
             if (isActive) button.setAttribute('aria-current', 'page');
             else button.removeAttribute('aria-current');
         });
+
+        if (section.id === 'usuarios') loadUsers();
     }
 
     function buildPanelNavigation(profileName) {
@@ -437,9 +701,254 @@
         showPanelSection(defaultSection);
     }
 
+    function setUserFeedback(message, type = 'success') {
+        const feedback = document.getElementById('user-management-feedback');
+        feedback.textContent = message;
+        feedback.className = `user-management-feedback ${type}`;
+        feedback.style.display = 'block';
+    }
+
+    function userOperationError(error) {
+        switch (error.code) {
+            case 'functions/already-exists':
+                return 'Já existe uma conta com esse email.';
+            case 'functions/failed-precondition':
+                return 'A operação não pode ser concluída. Verifique se há outro Admin Geral ativo e se a conta de autenticação está habilitada.';
+            case 'functions/permission-denied':
+                return 'A operação não é permitida para sua conta.';
+            case 'functions/invalid-argument':
+                return 'Confira os dados e a combinação de perfil e escopo.';
+            case 'functions/not-found':
+                return 'O cadastro selecionado não foi encontrado.';
+            default:
+                return 'Não foi possível concluir a operação. Tente novamente.';
+        }
+    }
+
+    function populateScopeSelect(profileSelect, scopeSelect, selectedScope = '') {
+        const scopes = validScopes[profileSelect.value] || [];
+        scopeSelect.replaceChildren();
+        scopes.forEach(scope => {
+            const option = document.createElement('option');
+            option.value = scope;
+            option.textContent = scopeLabels[scope] || scope;
+            scopeSelect.appendChild(option);
+        });
+        scopeSelect.disabled = scopes.length === 0;
+        if (scopes.includes(selectedScope)) scopeSelect.value = selectedScope;
+    }
+
+    function createActionButton(label, className, onClick) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = className;
+        button.textContent = label;
+        button.addEventListener('click', onClick);
+        return button;
+    }
+
+    function renderUsers() {
+        const tbody = document.getElementById('user-list-body');
+        tbody.replaceChildren();
+
+        if (usersCache.length === 0) {
+            const row = document.createElement('tr');
+            const cell = document.createElement('td');
+            cell.colSpan = 6;
+            cell.textContent = 'Nenhum usuário cadastrado.';
+            row.appendChild(cell);
+            tbody.appendChild(row);
+            return;
+        }
+
+        usersCache
+            .slice()
+            .sort((a, b) => (a.nome || '').localeCompare(b.nome || '', 'pt-BR'))
+            .forEach(user => {
+                const row = document.createElement('tr');
+                [
+                    user.nome,
+                    user.email,
+                    profileLabels[user.perfil] || user.perfil,
+                    scopeLabels[user.escopo] || user.escopo,
+                    user.status === 'ativo' ? 'Ativo' : 'Bloqueado'
+                ].forEach(value => {
+                    const cell = document.createElement('td');
+                    cell.textContent = value || '';
+                    row.appendChild(cell);
+                });
+
+                const actionsCell = document.createElement('td');
+                if (user.uid === auth.currentUser?.uid) {
+                    const selfLabel = document.createElement('span');
+                    selfLabel.className = 'user-self-label';
+                    selfLabel.textContent = 'Sua conta';
+                    actionsCell.appendChild(selfLabel);
+                } else {
+                    const actions = document.createElement('div');
+                    actions.className = 'user-table-actions';
+                    actions.appendChild(createActionButton('Editar', 'user-action-button', () => beginUserEdit(user)));
+                    const nextStatus = user.status === 'ativo' ? 'bloqueado' : 'ativo';
+                    const statusLabel = nextStatus === 'bloqueado' ? 'Bloquear' : 'Desbloquear';
+                    actions.appendChild(createActionButton(statusLabel, 'user-action-button block-action', () => changeUserStatus(user, nextStatus)));
+                    actionsCell.appendChild(actions);
+                }
+                row.appendChild(actionsCell);
+                tbody.appendChild(row);
+            });
+    }
+
+    async function loadUsers() {
+        const tbody = document.getElementById('user-list-body');
+        tbody.replaceChildren();
+        const loadingRow = document.createElement('tr');
+        const loadingCell = document.createElement('td');
+        loadingCell.colSpan = 6;
+        loadingCell.textContent = 'Carregando usuários...';
+        loadingRow.appendChild(loadingCell);
+        tbody.appendChild(loadingRow);
+
+        try {
+            if (authorizedProfile?.perfil !== 'admin_geral' || authorizedProfile?.escopo !== 'global') {
+                throw new Error('Acesso não autorizado à lista de usuários.');
+            }
+            const snapshot = await getDocs(collection(db, 'usuarios'));
+            usersCache = snapshot.docs.map(userDoc => ({ uid: userDoc.id, ...userDoc.data() }));
+            renderUsers();
+        } catch (error) {
+            console.error('Erro ao carregar usuários:', error);
+            usersCache = [];
+            tbody.replaceChildren();
+            const errorRow = document.createElement('tr');
+            const errorCell = document.createElement('td');
+            errorCell.colSpan = 6;
+            errorCell.textContent = 'Não foi possível carregar os usuários.';
+            errorRow.appendChild(errorCell);
+            tbody.appendChild(errorRow);
+            setUserFeedback('Falha ao consultar os cadastros. Verifique o acesso ao Firestore.', 'error');
+        }
+    }
+
+    function beginUserEdit(user) {
+        if (user.uid === auth.currentUser?.uid) {
+            setUserFeedback('Não é permitido alterar o próprio cadastro.', 'error');
+            return;
+        }
+        document.getElementById('edit-user-empty').hidden = true;
+        const form = document.getElementById('edit-user-form');
+        form.hidden = false;
+        document.getElementById('edit-user-uid').value = user.uid;
+        document.getElementById('edit-user-name').value = user.nome || '';
+        document.getElementById('edit-user-email').value = user.email || '';
+        document.getElementById('edit-user-profile').value = user.perfil;
+        populateScopeSelect(
+            document.getElementById('edit-user-profile'),
+            document.getElementById('edit-user-scope'),
+            user.escopo
+        );
+        document.getElementById('edit-user-status').value = user.status;
+    }
+
+    function cancelUserEdit() {
+        document.getElementById('edit-user-form').reset();
+        document.getElementById('edit-user-form').hidden = true;
+        document.getElementById('edit-user-empty').hidden = false;
+    }
+
+    async function changeUserStatus(user, status) {
+        const verb = status === 'bloqueado' ? 'bloquear' : 'desbloquear';
+        if (!window.confirm(`Confirma ${verb} o acesso de ${user.nome}?`)) return;
+
+        try {
+            await updateAdminUser({
+                uid: user.uid,
+                nome: user.nome,
+                perfil: user.perfil,
+                escopo: user.escopo,
+                status
+            });
+            await loadUsers();
+            setUserFeedback(`Usuário ${status === 'ativo' ? 'desbloqueado' : 'bloqueado'} com sucesso.`);
+        } catch (error) {
+            console.error('Erro ao alterar status do usuário:', error);
+            setUserFeedback(userOperationError(error), 'error');
+        }
+    }
+
+    document.getElementById('new-user-profile').addEventListener('change', event => {
+        populateScopeSelect(event.currentTarget, document.getElementById('new-user-scope'));
+    });
+
+    document.getElementById('edit-user-profile').addEventListener('change', event => {
+        populateScopeSelect(event.currentTarget, document.getElementById('edit-user-scope'));
+    });
+
+    document.getElementById('create-user-form').addEventListener('submit', async event => {
+        event.preventDefault();
+        const button = event.currentTarget.querySelector('button[type="submit"]');
+        const name = document.getElementById('new-user-name').value.trim();
+        const email = document.getElementById('new-user-email').value.trim();
+        const profile = document.getElementById('new-user-profile').value;
+        const scope = document.getElementById('new-user-scope').value;
+        button.disabled = true;
+
+        try {
+            const result = await createAdminUser({ nome: name, email, perfil: profile, escopo: scope });
+            let resetEmailSent = true;
+            try {
+                await sendPasswordResetEmail(auth, result.data.email);
+            } catch (emailError) {
+                resetEmailSent = false;
+                console.error('Usuário criado, mas o email de configuração de senha falhou:', emailError);
+            }
+
+            event.currentTarget.reset();
+            document.getElementById('new-user-scope').replaceChildren();
+            document.getElementById('new-user-scope').disabled = true;
+            await loadUsers();
+            setUserFeedback(resetEmailSent
+                ? 'Usuário criado e email enviado para configurar a senha.'
+                : 'Usuário criado, mas o email não foi enviado. A pessoa pode solicitar a redefinição na tela de login.',
+            resetEmailSent ? 'success' : 'error');
+        } catch (error) {
+            console.error('Erro ao criar usuário:', error);
+            setUserFeedback(userOperationError(error), 'error');
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    document.getElementById('edit-user-form').addEventListener('submit', async event => {
+        event.preventDefault();
+        const button = event.currentTarget.querySelector('button[type="submit"]');
+        const uid = document.getElementById('edit-user-uid').value;
+        button.disabled = true;
+
+        try {
+            await updateAdminUser({
+                uid,
+                nome: document.getElementById('edit-user-name').value.trim(),
+                perfil: document.getElementById('edit-user-profile').value,
+                escopo: document.getElementById('edit-user-scope').value,
+                status: document.getElementById('edit-user-status').value
+            });
+            cancelUserEdit();
+            await loadUsers();
+            setUserFeedback('Cadastro atualizado com sucesso.');
+        } catch (error) {
+            console.error('Erro ao atualizar usuário:', error);
+            setUserFeedback(userOperationError(error), 'error');
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    document.getElementById('cancel-user-edit').addEventListener('click', cancelUserEdit);
+
     // Validação de sessão do parceiro
     onAuthStateChanged(auth, async (user) => {
         if (!user) {
+            stopProfileSubscription();
             window.location.href = 'admin.html';
             return;
         }
@@ -470,8 +979,32 @@
                 restaurantId = restaurantByScope[profile.escopo].id;
                 document.getElementById('restaurant-name').innerText = restaurantByScope[profile.escopo].name;
             }
+
+            stopProfileSubscription();
+            profileSubscription = onSnapshot(doc(db, 'usuarios', user.uid), async snapshot => {
+                const currentProfile = snapshot.exists() ? snapshot.data() : null;
+                const accessStillMatches = currentProfile?.status === 'ativo' &&
+                    currentProfile.perfil === profile.perfil &&
+                    currentProfile.escopo === profile.escopo;
+
+                if (!accessStillMatches) {
+                    stopProfileSubscription();
+                    await signOut(auth);
+                    window.location.href = 'admin.html?acesso=invalido';
+                    return;
+                }
+
+                authorizedProfile = currentProfile;
+                document.getElementById('user-badge').innerText = currentProfile.nome || user.email;
+            }, async error => {
+                console.error('Erro ao acompanhar o cadastro administrativo:', error);
+                stopProfileSubscription();
+                await signOut(auth);
+                window.location.href = 'admin.html?acesso=erro';
+            });
         } catch (error) {
             console.error('Erro ao validar cadastro administrativo:', error);
+            stopProfileSubscription();
             await signOut(auth);
             window.location.href = 'admin.html?acesso=erro';
         }
@@ -518,6 +1051,7 @@
 
     // Logout
     window.handleLogout = function() {
+        stopProfileSubscription();
         signOut(auth).then(() => {
             window.location.href = 'admin.html';
         });
