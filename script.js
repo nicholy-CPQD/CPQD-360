@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // --- 1. CONFIGURAÇÃO BASE DO MAPA ---
-    const imageUrl = './img/campus_map_base.png'; // Substitua pela sua imagem quando tiver
+    const imageUrl = './img/Fundo.svg'; // Substitua pela sua imagem quando tiver
     const imageW = 1920; 
     const imageH = 1080;
 
@@ -24,82 +24,157 @@ document.addEventListener('DOMContentLoaded', function() {
     map.setMaxBounds(bounds);
     map.fitBounds(bounds);
 
+    // --- MOSTRAR CORDENADAS---
+    map.on('click', function(e) {
+        const y = Math.round(e.latlng.lat);
+        const x = Math.round(e.latlng.lng);
+        
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(`<b>Coordenadas:</b><br>[${y}, ${x}]`)
+            .openOn(map);
+            
+        console.log(`Coordenadas clicadas: [${y}, ${x}]`);
+    });
+
+    // ------------------------------------------------
+
     // --- 2. BASE DE DADOS DOS PRÉDIOS ---
     const prediosData = [
         {
             id: '02',
             nome: '02 - Administração',
             setor: 'Admin',
-            pos: [350, 850],
-            cor: '#00BFA5',
+            pos: [224, 732],
+            pinUrl: './img/Pin 02.svg', 
+            pinHoverUrl: './img/Pin 02 hover.svg', 
+            predioUrl: './img/Prédio 2.svg',             
+            predioHoverUrl: './img/Prédio 02 hover.svg', 
+            predioBounds: [[210, 597], [277, 750]],      
             popup: '<h3>Administração</h3><p>Prédio administrativo central do CPQD.</p>'
         },
         {
             id: '04',
             nome: '04 - Financeiro e Corporativo',
             setor: 'Financeiro',
-            pos: [250, 980],
-            cor: '#00BFA5',
+            pos: [160, 899],
+            pinUrl: './img/Pin 04.svg', 
+            pinHoverUrl: './img/Pin 04 hover.svg',
+            predioUrl: './img/Prédio 4.svg',
+            predioHoverUrl: './img/Prédio 04 hover.svg',
+            predioBounds: [[337, 935], [147, 815]],
             popup: '<h3>Financeiro</h3><p>Setor corporativo e financeiro.</p>'
         },
         {
             id: '05',
             nome: '05 - Auditório',
             setor: 'Auditório',
-            pos: [480, 780],
-            cor: '#FDD835',
+            pos: [459, 708],
+            pinUrl: './img/Pin 05.svg', 
+            pinHoverUrl: './img/Pin 05 hover.svg',
+            predioUrl: './img/Prédio 5 - auditorio.svg',
+            predioHoverUrl: './img/Prédio 5 - hover.svg',
+            predioBounds: [[575, 726], [440, 630]],
             popup: '<h3>Auditório Principal</h3><p>Espaço para eventos e conferências.</p>'
         },
         {
             id: '12',
             nome: '12 - Laboratório CFOA',
             setor: 'Laboratórios',
-            pos: [450, 1250],
-            cor: '#FFA726',
-            popup: `
-                <div class="custom-popup-header"><h2>Prédio 12 - Laboratórios</h2></div>
-                <div class="custom-popup-body">
-                    <p><strong>LABORATÓRIO L-12 CFOA</strong><br>Realizam teste para homologação de cabos e fibras.</p>
-                    <hr>
-                    <p><strong>LABORATÓRIOS ENSAIOS CLIMÁTICOS</strong><br>Simulação de clima para fibras ópticas.</p>
-                    <button class="popup-details-btn">Ver Detalhes Completos</button>
-                </div>`
+            pos: [418, 1205],
+            pinUrl: './img/Pin 12.svg', 
+            pinHoverUrl: './img/Pin 12 hover.svg',
+            predioUrl: './img/Prédio 12.svg',
+            predioHoverUrl: './img/Prédio 12 hover.svg',
+            predioBounds: [[615, 1215], [400, 920]],
+            popup: `...` 
         },
         {
             id: 'L04',
             nome: 'L-04 - Laboratório SARS',
             setor: 'Laboratórios',
-            pos: [800, 1500],
-            cor: '#FFA726',
+            pos: [820, 1480],
+            pinUrl: './img/Pin L4.svg', 
+            pinHoverUrl: './img/Pin L4 hover.svg',
+            predioUrl: './img/Prédio L - 04.svg',
+            predioHoverUrl: './img/Prédio L - 04 hover.svg',
+            predioBounds: [[1000, 1500], [800, 1400]],
             popup: '<h3>Laboratório SARS</h3><p>Pesquisa e desenvolvimento avançado.</p>'
         },
         {
             id: '13',
             nome: '13 - Laboratório de Calibração',
             setor: 'Laboratórios',
-            pos: [750, 700],
-            cor: '#FFA726',
+            pos: [798, 595],
+            pinUrl: './img/Pin 13.svg', 
+            pinHoverUrl: './img/Pin 13 hover.svg',
+            predioUrl: './img/Prédio 13.svg',
+            predioHoverUrl: './img/Prédio 13 hover.svg',
+            predioBounds: [[951, 608], [768, 447]],
             popup: '<h3>Laboratório de Calibração</h3><p>Serviços de medição e calibração de precisão.</p>'
         }
     ];
 
-    // --- 3. CRIAÇÃO DOS MARCADORES ---
+// --- 3. CRIAÇÃO DOS MARCADORES ---
     const markersGroup = {};
 
     prediosData.forEach(p => {
-        const iconHtml = L.divIcon({
-            className: 'custom-div-icon',
-            html: `<div style="background-color: ${p.cor}; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">${p.id}</div>`,
-            iconSize: [30, 30],
-            iconAnchor: [15, 15]
-        });
+        const iconNormal = L.icon({ iconUrl: p.pinUrl, iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -40] });
+        const iconHover = L.icon({ iconUrl: p.pinHoverUrl, iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -40] });
 
-        const marker = L.marker(p.pos, { icon: iconHtml }).addTo(map);
+        // 1. CARREGA OS DOIS ESTADOS DO PRÉDIO
+        let predioNormal = null;
+        let predioHover = null;
+
+        if (p.predioUrl && p.predioBounds) {
+            // Desenha o prédio normal (Visível)
+            predioNormal = L.imageOverlay(p.predioUrl, p.predioBounds, {
+                opacity: 1, 
+                interactive: false 
+            }).addTo(map);
+
+            // Desenha o prédio de hover por cima (Invisível)
+            if (p.predioHoverUrl) {
+                predioHover = L.imageOverlay(p.predioHoverUrl, p.predioBounds, {
+                    opacity: 0, 
+                    interactive: false
+                }).addTo(map);
+            }
+        }
+
+        const marker = L.marker(p.pos, { icon: iconNormal }).addTo(map);
         marker.bindPopup(p.popup, { maxWidth: 320 });
         
+        // --- A MÁGICA DO HOVER (PINO E PRÉDIO) ---
+        marker.on('mouseover', function() {
+            this.setIcon(iconHover);
+            if (predioNormal) predioNormal.setOpacity(0); // Esconde o normal
+            if (predioHover) predioHover.setOpacity(1);   // Mostra o iluminado
+        });
+        
+        marker.on('mouseout', function() {
+            if (!this.isPopupOpen()) {
+                this.setIcon(iconNormal);
+                if (predioNormal) predioNormal.setOpacity(1); // Volta o normal
+                if (predioHover) predioHover.setOpacity(0);   // Esconde o iluminado
+            }
+        });
+
+        marker.on('popupopen', function() {
+            this.setIcon(iconHover);
+            if (predioNormal) predioNormal.setOpacity(0);
+            if (predioHover) predioHover.setOpacity(1);
+        });
+
+        marker.on('popupclose', function() {
+            this.setIcon(iconNormal);
+            if (predioNormal) predioNormal.setOpacity(1);
+            if (predioHover) predioHover.setOpacity(0);
+        });
+        // -----------------------------------
+
         marker.setor = p.setor;
         marker.nome = p.nome;
-
         markersGroup[p.id] = marker;
     });
 
