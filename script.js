@@ -32,7 +32,11 @@ document.addEventListener('DOMContentLoaded', function() {
             setor: 'Admin',
             pos: [350, 850],
             cor: '#00BFA5',
-            popup: '<h3>Administração</h3><p>Prédio administrativo central do CPQD.</p>'
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 02 - Administração</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>1º Andar</strong><br>Prédio administrativo central do CPQD.</p>
+                `
         },
         {
             id: '04',
@@ -79,7 +83,14 @@ document.addEventListener('DOMContentLoaded', function() {
             setor: 'Laboratórios',
             pos: [750, 700],
             cor: '#FFA726',
-            popup: '<h3>Laboratório de Calibração</h3><p>Serviços de medição e calibração de precisão.</p>'
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 13 - Laboratórios</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>L-13 - LABORATÓRIOS DE CALIBRAÇÃO</strong><br>Serviços de medição e calibração de precisão.</p>
+                    <hr>
+                    <p><strong>GTEM</strong><br>Calibração mediadores de radiação não ionizantes e eletromagnético.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                    </div>`
         }
     ];
 
