@@ -112,28 +112,42 @@ document.addEventListener('DOMContentLoaded', function() {
             predioHoverUrl: './img/Prédio 13 hover.svg',
             predioBounds: [[951, 608], [768, 447]],
             popup: '<h3>Laboratório de Calibração</h3><p>Serviços de medição e calibração de precisão.</p>'
+        },
+        {
+            id: 'portaria',
+            nome: 'Portaria',
+            predioUrl: './img/Portaria.svg',
+            predioBounds: [[55, 633], [11, 723]] 
+        },
+        {
+            id: 'techoa',
+            nome: 'Techoa',
+            predioUrl: './img/prédio (1).svg',
+            predioBounds: [[335, 140], [147, 815]] 
+        },
+        {
+            id: 'll',
+            nome: 'Laranja Lima',
+            predioUrl: './img/prédio.svg',
+            predioBounds: [[745, 624], [610, 726]] 
         }
+        
     ];
 
 // --- 3. CRIAÇÃO DOS MARCADORES ---
     const markersGroup = {};
 
     prediosData.forEach(p => {
-        const iconNormal = L.icon({ iconUrl: p.pinUrl, iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -40] });
-        const iconHover = L.icon({ iconUrl: p.pinHoverUrl, iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -40] });
-
-        // 1. CARREGA OS DOIS ESTADOS DO PRÉDIO
         let predioNormal = null;
         let predioHover = null;
 
+        // 1. CARREGA AS IMAGENS DO PRÉDIO
         if (p.predioUrl && p.predioBounds) {
-            // Desenha o prédio normal (Visível)
             predioNormal = L.imageOverlay(p.predioUrl, p.predioBounds, {
                 opacity: 1, 
                 interactive: false 
             }).addTo(map);
 
-            // Desenha o prédio de hover por cima (Invisível)
             if (p.predioHoverUrl) {
                 predioHover = L.imageOverlay(p.predioHoverUrl, p.predioBounds, {
                     opacity: 0, 
@@ -142,40 +156,44 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        const marker = L.marker(p.pos, { icon: iconNormal }).addTo(map);
-        marker.bindPopup(p.popup, { maxWidth: 320 });
-        
-        // --- A MÁGICA DO HOVER (PINO E PRÉDIO) ---
-        marker.on('mouseover', function() {
-            this.setIcon(iconHover);
-            if (predioNormal) predioNormal.setOpacity(0); // Esconde o normal
-            if (predioHover) predioHover.setOpacity(1);   // Mostra o iluminado
-        });
-        
-        marker.on('mouseout', function() {
-            if (!this.isPopupOpen()) {
+        // 2. CRIA O PINO E A INTERATIVIDADE APENAS SE HOUVER COORDENADA (p.pos)
+        if (p.pos) {
+            const iconNormal = L.icon({ iconUrl: p.pinUrl, iconSize: [40, 40], iconAnchor: [20, 25], popupAnchor: [0, -40] }); // Ajusta o teu anchor aqui
+            const iconHover = L.icon({ iconUrl: p.pinHoverUrl, iconSize: [40, 40], iconAnchor: [20, 25], popupAnchor: [0, -40] });
+
+            const marker = L.marker(p.pos, { icon: iconNormal }).addTo(map);
+            if (p.popup) marker.bindPopup(p.popup, { maxWidth: 320 });
+            
+            marker.on('mouseover', function() {
+                this.setIcon(iconHover);
+                if (predioNormal && p.predioHoverUrl) predioNormal.setOpacity(0); 
+                if (predioHover) predioHover.setOpacity(1);   
+            });
+            
+            marker.on('mouseout', function() {
+                if (!this.isPopupOpen()) {
+                    this.setIcon(iconNormal);
+                    if (predioNormal && p.predioHoverUrl) predioNormal.setOpacity(1); 
+                    if (predioHover) predioHover.setOpacity(0);   
+                }
+            });
+
+            marker.on('popupopen', function() {
+                this.setIcon(iconHover);
+                if (predioNormal && p.predioHoverUrl) predioNormal.setOpacity(0);
+                if (predioHover) predioHover.setOpacity(1);
+            });
+
+            marker.on('popupclose', function() {
                 this.setIcon(iconNormal);
-                if (predioNormal) predioNormal.setOpacity(1); // Volta o normal
-                if (predioHover) predioHover.setOpacity(0);   // Esconde o iluminado
-            }
-        });
+                if (predioNormal && p.predioHoverUrl) predioNormal.setOpacity(1);
+                if (predioHover) predioHover.setOpacity(0);
+            });
 
-        marker.on('popupopen', function() {
-            this.setIcon(iconHover);
-            if (predioNormal) predioNormal.setOpacity(0);
-            if (predioHover) predioHover.setOpacity(1);
-        });
-
-        marker.on('popupclose', function() {
-            this.setIcon(iconNormal);
-            if (predioNormal) predioNormal.setOpacity(1);
-            if (predioHover) predioHover.setOpacity(0);
-        });
-        // -----------------------------------
-
-        marker.setor = p.setor;
-        marker.nome = p.nome;
-        markersGroup[p.id] = marker;
+            marker.setor = p.setor;
+            marker.nome = p.nome;
+            markersGroup[p.id] = marker;
+        }
     });
 
     // --- 4. INTERAÇÃO COM A LISTA LATERAL ---
