@@ -269,6 +269,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetBtn = document.getElementById('reset-map-btn');
     if (resetBtn) {
         resetBtn.addEventListener('click', function() {
+            map.closePopup();       // fecha qualquer popup aberto
             map.fitBounds(bounds);
         });
     }
