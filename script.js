@@ -24,19 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
     map.setMaxBounds(bounds);
     map.fitBounds(bounds);
 
-    // --- MOSTRAR CORDENADAS---
-    map.on('click', function(e) {
-        const y = Math.round(e.latlng.lat);
-        const x = Math.round(e.latlng.lng);
-        
-        L.popup()
-            .setLatLng(e.latlng)
-            .setContent(`<b>Coordenadas:</b><br>[${y}, ${x}]`)
-            .openOn(map);
-            
-        console.log(`Coordenadas clicadas: [${y}, ${x}]`);
-    });
-
     // ------------------------------------------------
 
     // --- 2. BASE DE DADOS DOS PRÉDIOS ---
