@@ -563,6 +563,31 @@ body {
     gap: 15px;
 }
 
+.popup-details-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--cpqd-green-dark);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+  }
+  
+  .popup-details-btn:hover {
+    filter: brightness(1.1);
+  }
+  
+  .popup-details-btn:focus-visible {
+    outline: 2px solid var(--cpqd-green-dark);
+    outline-offset: 2px;
+  }
+
 /* ===================================================
    SERVIÇOS & GASTRONOMIA (GRID E BOTÕES DUPLOS)
 =================================================== */

@@ -32,15 +32,32 @@ document.addEventListener('DOMContentLoaded', function() {
             setor: 'Admin',
             pos: [350, 850],
             cor: '#00BFA5',
-            popup: '<h3>Administração</h3><p>Prédio administrativo central do CPQD.</p>'
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 02 - Administração</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>1º Andar</strong><br>Prédio administrativo central do CPQD (RH, Facilites, Segurança do Trabalho).</p>
+                    <hr>
+                    <p><strong>2ª andar</strong><br>Destinado a presidência e jurídico do CPQD.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+                `
+                
         },
         {
             id: '04',
             nome: '04 - Financeiro e Corporativo',
-            setor: 'Financeiro',
+            setor: 'Corporativo',
             pos: [250, 980],
             cor: '#00BFA5',
-            popup: '<h3>Financeiro</h3><p>Setor corporativo e financeiro.</p>'
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 04 - Corporativo e Financeiro</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>Financeiro</strong><br>Prédio responsável pelo setor financeiro e comercial.</p>
+                    <hr>
+                    <p><strong>Corporativo</strong><br>Responsável por atividades do setor corporativo (DPS, DTIN, DGTIC).</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: '05',
@@ -48,7 +65,15 @@ document.addEventListener('DOMContentLoaded', function() {
             setor: 'Auditório',
             pos: [480, 780],
             cor: '#FDD835',
-            popup: '<h3>Auditório Principal</h3><p>Espaço para eventos e conferências.</p>'
+            popup: `
+                <div class="custom-popup-header"><h3>Auditório Principal</h3></div>
+                <div class="custom-popup-body">
+                    <p><strong>Auditório</strong><br>Sala ampla voltada a eventos corporativos, conferências e cerimônias.</p>
+                    <hr>
+                    <p><strong>Anfiteatro</strong><br>Espaço semicircular em desnível para aulas, palestras e apresentações.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: '12',
@@ -63,7 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <hr>
                     <p><strong>LABORATÓRIOS ENSAIOS CLIMÁTICOS</strong><br>Simulação de clima para fibras ópticas.</p>
                     <button class="popup-details-btn">Ver Detalhes Completos</button>
-                </div>`
+                </div>
+                `
         },
         {
             id: 'L04',
@@ -71,7 +97,15 @@ document.addEventListener('DOMContentLoaded', function() {
             setor: 'Laboratórios',
             pos: [800, 1500],
             cor: '#FFA726',
-            popup: '<h3>Laboratório SARS</h3><p>Pesquisa e desenvolvimento avançado.</p>'
+            popup: `
+                <div class="custom-popup-header"><h3>Laboratório SARS</h3></div>
+                <div class="custom-popup-body">
+                    <p><strong>LABORATÓRIO DE ENSAIOS</strong><br>Realização de testes técnicos e controle de qualidade de materiais.</p>
+                    <hr>
+                    <p><strong>CERTIFICAÇÃO SARS</strong><br>Validação e conformidade com os padrões regulatórios SARS.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: '13',
@@ -79,7 +113,14 @@ document.addEventListener('DOMContentLoaded', function() {
             setor: 'Laboratórios',
             pos: [750, 700],
             cor: '#FFA726',
-            popup: '<h3>Laboratório de Calibração</h3><p>Serviços de medição e calibração de precisão.</p>'
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 13 - Laboratórios</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>L-13 - LABORATÓRIOS DE CALIBRAÇÃO</strong><br>Serviços de medição e calibração de precisão.</p>
+                    <hr>
+                    <p><strong>GTEM</strong><br>Calibração mediadores de radiação não ionizantes e eletromagnético.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                    </div>`
         }
     ];
 
