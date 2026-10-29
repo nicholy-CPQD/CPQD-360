@@ -196,6 +196,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // --- BOTÃO PARA ABRIR/FECHAR A BARRA LATERAL ---
+    const sidebar = document.querySelector('.map-sidebar');
+    const toggleBtn = document.getElementById('sidebar-toggle');
+    const mobileQuery = window.matchMedia('(max-width: 768px)');
+
+    function setSidebarCollapsed(collapsed) {
+        if (!sidebar || !toggleBtn) return;
+        sidebar.classList.toggle('collapsed', collapsed);
+        toggleBtn.setAttribute('aria-expanded', String(!collapsed));
+        toggleBtn.setAttribute('aria-label', collapsed ? 'Abrir menu lateral' : 'Fechar menu lateral');
+    }
+
+    if (sidebar && toggleBtn) {
+        setSidebarCollapsed(mobileQuery.matches);   // no celular, começa fechada
+
+        toggleBtn.addEventListener('click', function() {
+            setSidebarCollapsed(!sidebar.classList.contains('collapsed'));
+        });
+
+        // Ao girar o celular ou redimensionar a janela
+        mobileQuery.addEventListener('change', function(e) {
+            setSidebarCollapsed(e.matches);
+        });
+    }
+
     // --- 4. INTERAÇÃO COM A LISTA LATERAL ---
     const listItems = document.querySelectorAll('.building-list li');
     
@@ -236,8 +261,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --- 6. BARRA DE PESQUISA MINIMALISTA ---
-    const searchInput = document.getElementById('search-input');
-    const searchResultsList = document.getElementById('search-results-list');
+    const searchInput = document.getElementById('sidebar-search-input');
+    const searchResultsList = document.getElementById('sidebar-search-results');
 
     if (searchInput && searchResultsList) {
         searchInput.addEventListener('input', function() {
