@@ -228,6 +228,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // --- ABRIR E FECHAR O PAINEL LATERAL ---
+    const sidebar = document.querySelector('.map-sidebar');
+    const sidebarContent = document.getElementById('map-sidebar-content');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const mobileSidebarQuery = window.matchMedia('(max-width: 768px)');
+
+    if (sidebar && sidebarContent && sidebarToggle) {
+        const setSidebarCollapsed = collapsed => {
+            sidebar.classList.toggle('collapsed', collapsed);
+            sidebarToggle.setAttribute('aria-expanded', String(!collapsed));
+            sidebarToggle.setAttribute('aria-label', collapsed ? 'Abrir menu lateral' : 'Fechar menu lateral');
+            sidebarContent.toggleAttribute('inert', collapsed);
+            sidebarContent.setAttribute('aria-hidden', String(collapsed));
+        };
+
+        sidebar.addEventListener('transitionend', function(event) {
+            if (event.target === sidebar && event.propertyName === 'transform') {
+                map.invalidateSize({ pan: false });
+            }
+        });
+
+        sidebarToggle.addEventListener('click', function() {
+            setSidebarCollapsed(!sidebar.classList.contains('collapsed'));
+        });
+
+        const handleMobileSidebarChange = event => setSidebarCollapsed(event.matches);
+        if (mobileSidebarQuery.addEventListener) {
+            mobileSidebarQuery.addEventListener('change', handleMobileSidebarChange);
+        } else {
+            mobileSidebarQuery.addListener(handleMobileSidebarChange);
+        }
+
+        setSidebarCollapsed(mobileSidebarQuery.matches);
+    }
+
     // --- 4. INTERAÇÃO COM A LISTA LATERAL ---
     const listItems = document.querySelectorAll('.building-list li');
     
