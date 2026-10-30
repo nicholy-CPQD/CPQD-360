@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // --- 1. CONFIGURAÇÃO BASE DO MAPA ---
-    const imageUrl = './img/Fundo.svg'; // Substitua pela sua imagem quando tiver
+    const imageUrl = './img/Mapa base.svg';
     const imageW = 1920; 
     const imageH = 1080;
 
@@ -24,8 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
     map.setMaxBounds(bounds);
     map.fitBounds(bounds);
 
-    // ------------------------------------------------
-
     // --- 2. BASE DE DADOS DOS PRÉDIOS ---
     const prediosData = [
         {
@@ -33,95 +31,142 @@ document.addEventListener('DOMContentLoaded', function() {
             nome: '02 - Administração',
             setor: 'Admin',
             pos: [224, 732],
-            pinUrl: './img/Pin 02.svg', 
-            pinHoverUrl: './img/Pin 02 hover.svg', 
-            predioUrl: './img/Prédio 2.svg',             
-            predioHoverUrl: './img/Prédio 02 hover.svg', 
-            predioBounds: [[210, 597], [277, 750]],      
-            popup: '<h3>Administração</h3><p>Prédio administrativo central do CPQD.</p>'
+            pinUrl: './img/Pin 02.svg',
+            pinHoverUrl: './img/Pin 02 hover.svg',
+            predioUrl: './img/Prédio 2.svg',
+            predioHoverUrl: './img/Prédio 02 hover.svg',
+            predioBounds: [[210, 597], [277, 750]],
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 02 - Administração</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>1º Andar</strong><br>Prédio administrativo central do CPQD (RH, Facilites, Segurança do Trabalho).</p>
+                    <hr>
+                    <p><strong>2ª andar</strong><br>Destinado a presidência e jurídico do CPQD.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: '04',
             nome: '04 - Financeiro e Corporativo',
             setor: 'Financeiro',
             pos: [160, 899],
-            pinUrl: './img/Pin 04.svg', 
+            pinUrl: './img/Pin 04.svg',
             pinHoverUrl: './img/Pin 04 hover.svg',
             predioUrl: './img/Prédio 4.svg',
             predioHoverUrl: './img/Prédio 04 hover.svg',
             predioBounds: [[337, 935], [147, 815]],
-            popup: '<h3>Financeiro</h3><p>Setor corporativo e financeiro.</p>'
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 04 - Corporativo e Financeiro</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>Financeiro</strong><br>Prédio responsável pelo setor financeiro e comercial.</p>
+                    <hr>
+                    <p><strong>Corporativo</strong><br>Responsável por atividades do setor corporativo (DPS, DTIN, DGTIC).</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: '05',
             nome: '05 - Auditório',
             setor: 'Auditório',
             pos: [459, 708],
-            pinUrl: './img/Pin 05.svg', 
+            pinUrl: './img/Pin 05.svg',
             pinHoverUrl: './img/Pin 05 hover.svg',
             predioUrl: './img/Prédio 5 - auditorio.svg',
             predioHoverUrl: './img/Prédio 5 - hover.svg',
             predioBounds: [[575, 726], [440, 630]],
-            popup: '<h3>Auditório Principal</h3><p>Espaço para eventos e conferências.</p>'
+            popup: `
+                <div class="custom-popup-header"><h3>Auditório Principal</h3></div>
+                <div class="custom-popup-body">
+                    <p><strong>Auditório</strong><br>Sala ampla voltada a eventos corporativos, conferências e cerimônias.</p>
+                    <hr>
+                    <p><strong>Anfiteatro</strong><br>Espaço semicircular em desnível para aulas, palestras e apresentações.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: '12',
             nome: '12 - Laboratório CFOA',
             setor: 'Laboratórios',
             pos: [418, 1205],
-            pinUrl: './img/Pin 12.svg', 
+            pinUrl: './img/Pin 12.svg',
             pinHoverUrl: './img/Pin 12 hover.svg',
             predioUrl: './img/Prédio 12.svg',
             predioHoverUrl: './img/Prédio 12 hover.svg',
             predioBounds: [[615, 1215], [400, 920]],
-            popup: `...` 
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 12 - Laboratórios</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>LABORATÓRIO L-12 CFOA</strong><br>Realizam teste para homologação de cabos e fibras.</p>
+                    <hr>
+                    <p><strong>LABORATÓRIOS ENSAIOS CLIMÁTICOS</strong><br>Simulação de clima para fibras ópticas.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: 'L04',
             nome: 'L-04 - Laboratório SARS',
             setor: 'Laboratórios',
             pos: [820, 1480],
-            pinUrl: './img/Pin L4.svg', 
+            pinUrl: './img/Pin L4.svg',
             pinHoverUrl: './img/Pin L4 hover.svg',
             predioUrl: './img/Prédio L - 04.svg',
             predioHoverUrl: './img/Prédio L - 04 hover.svg',
             predioBounds: [[1000, 1500], [800, 1400]],
-            popup: '<h3>Laboratório SARS</h3><p>Pesquisa e desenvolvimento avançado.</p>'
+            popup: `
+                <div class="custom-popup-header"><h3>Laboratório SARS</h3></div>
+                <div class="custom-popup-body">
+                    <p><strong>LABORATÓRIO DE ENSAIOS</strong><br>Realização de testes técnicos e controle de qualidade de materiais.</p>
+                    <hr>
+                    <p><strong>CERTIFICAÇÃO SARS</strong><br>Validação e conformidade com os padrões regulatórios SARS.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: '13',
             nome: '13 - Laboratório de Calibração',
             setor: 'Laboratórios',
             pos: [798, 595],
-            pinUrl: './img/Pin 13.svg', 
+            pinUrl: './img/Pin 13.svg',
             pinHoverUrl: './img/Pin 13 hover.svg',
             predioUrl: './img/Prédio 13.svg',
             predioHoverUrl: './img/Prédio 13 hover.svg',
             predioBounds: [[951, 608], [768, 447]],
-            popup: '<h3>Laboratório de Calibração</h3><p>Serviços de medição e calibração de precisão.</p>'
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 13 - Laboratórios</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>L-13 - LABORATÓRIOS DE CALIBRAÇÃO</strong><br>Serviços de medição e calibração de precisão.</p>
+                    <hr>
+                    <p><strong>GTEM</strong><br>Calibração mediadores de radiação não ionizantes e eletromagnético.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: 'portaria',
             nome: 'Portaria',
             predioUrl: './img/Portaria.svg',
-            predioBounds: [[55, 633], [11, 723]] 
+            predioBounds: [[55, 633], [11, 723]]
         },
         {
             id: 'techoa',
             nome: 'Techoa',
             predioUrl: './img/prédio (1).svg',
-            predioBounds: [[335, 140], [147, 815]] 
+            predioBounds: [[335, 140], [147, 815]]
         },
         {
             id: 'll',
             nome: 'Laranja Lima',
             predioUrl: './img/prédio.svg',
-            predioBounds: [[745, 624], [610, 726]] 
+            predioBounds: [[745, 624], [610, 726]]
         }
-        
     ];
 
-// --- 3. CRIAÇÃO DOS MARCADORES ---
+    // --- 3. CRIAÇÃO DOS MARCADORES ---
     const markersGroup = {};
 
     prediosData.forEach(p => {
