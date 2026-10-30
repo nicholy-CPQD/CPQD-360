@@ -88,12 +88,11 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.3px;
     position: relative;
-    transition: background-color 0.2s ease;
-    transition: color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-item:hover {
-    color: var(--cpqd-green-main);
+    color: var(--cpqd-green-hover);
 }
 
 /* Indicador Visual da Página Ativa */
