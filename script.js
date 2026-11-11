@@ -168,6 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- 3. CRIAÇÃO DOS MARCADORES ---
     const markersGroup = {};
+    const sectorLayers = [];
 
     prediosData.forEach(p => {
         let predioNormal = null;
@@ -187,6 +188,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 }).addTo(map);
             }
         }
+
+        const sectorLayer = {
+            setor: p.setor,
+            marker: null,
+            normalOverlay: predioNormal,
+            hoverOverlay: predioHover,
+            normalIcon: null
+        };
+        sectorLayers.push(sectorLayer);
 
         // 2. CRIA O PINO E A INTERATIVIDADE APENAS SE HOUVER COORDENADA (p.pos)
         if (p.pos) {
@@ -225,6 +235,8 @@ document.addEventListener('DOMContentLoaded', function() {
             marker.setor = p.setor;
             marker.nome = p.nome;
             markersGroup[p.id] = marker;
+            sectorLayer.marker = marker;
+            sectorLayer.normalIcon = iconNormal;
         }
     });
 
@@ -292,11 +304,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const categoria = this.innerText.trim();
 
-            Object.values(markersGroup).forEach(marker => {
-                if (categoria === 'Todos' || marker.setor === categoria) {
-                    map.addLayer(marker);
-                } else {
-                    map.removeLayer(marker);
+            sectorLayers.forEach(layer => {
+                // Overlays sem setor continuam com o comportamento atual: sempre visíveis.
+                if (!layer.setor) return;
+
+                const deveExibir = categoria === 'Todos' || layer.setor === categoria;
+
+                if (layer.marker) {
+                    if (!deveExibir && layer.marker.isPopupOpen()) {
+                        layer.marker.closePopup();
+                    }
+                    if (layer.normalIcon) layer.marker.setIcon(layer.normalIcon);
+                    if (deveExibir) {
+                        map.addLayer(layer.marker);
+                    } else {
+                        map.removeLayer(layer.marker);
+                    }
+                }
+
+                if (layer.normalOverlay) {
+                    layer.normalOverlay.setOpacity(1);
+                    if (deveExibir) {
+                        map.addLayer(layer.normalOverlay);
+                    } else {
+                        map.removeLayer(layer.normalOverlay);
+                    }
+                }
+
+                if (layer.hoverOverlay) {
+                    layer.hoverOverlay.setOpacity(0);
+                    if (deveExibir) {
+                        map.addLayer(layer.hoverOverlay);
+                    } else {
+                        map.removeLayer(layer.hoverOverlay);
+                    }
                 }
             });
         });
