@@ -43,38 +43,50 @@
     
     <!-- Painel Lateral de Filtros (Esquerda) -->
     <aside class="map-sidebar">
-        <!-- BUSCA COM LUPA EMBUTIDA -->
-        <div class="sidebar-search-box">
-            <svg class="search-icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00796B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        <button type="button" class="sidebar-toggle" id="sidebar-toggle"
+                aria-label="Fechar menu lateral" aria-controls="map-sidebar-content" aria-expanded="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00796B"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
-            <input type="text" id="search-input" placeholder="Buscar prédio...">
-        </div>
-        <ul class="search-results-dropdown" id="search-results-list"></ul>
+        </button>
 
-        <div class="filter-card">
-            <div class="filter-group">
-                <h3>FILTRAR POR SETOR</h3>
-                <div class="tag-container">
-                    <button class="tag-btn active">Todos</button>
-                    <button class="tag-btn">Admin</button>
-                    <button class="tag-btn">Financeiro</button>
-                    <button class="tag-btn">Auditório</button>
-                    <button class="tag-btn">Laboratórios</button>
+        <div class="map-sidebar-content" id="map-sidebar-content">
+            <div class="sidebar-search-wrapper">
+                <!-- BUSCA COM LUPA EMBUTIDA -->
+                <div class="sidebar-search-box">
+                    <svg class="search-icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00796B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="search-input" placeholder="Buscar prédio...">
                 </div>
+                <ul class="search-results-dropdown" id="search-results-list"></ul>
             </div>
 
-            <div class="building-list-group">
-                <h3>PRÉDIOS</h3>
-                <ul class="building-list">
-                    <li><span class="status-dot p-pd"></span> 02 - Administração</li>
-                    <li><span class="status-dot p-pd"></span> 04 - Financeiro e Corporativo</li>
-                    <li><span class="status-dot p-pd"></span> 05 - Auditório</li>
-                    <li class="active"><span class="status-dot p-lab"></span> 12 - Laboratório CFOA</li>
-                    <li><span class="status-dot p-lab"></span> L-04 - Laboratório SARS</li>
-                    <li><span class="status-dot p-generic"></span> 13 - Laboratório de Calibração</li>
-                </ul>
+            <div class="filter-card">
+                <div class="filter-group">
+                    <h3>FILTRAR POR SETOR</h3>
+                    <div class="tag-container">
+                        <button class="tag-btn active">Todos</button>
+                        <button class="tag-btn">Admin</button>
+                        <button class="tag-btn">Financeiro</button>
+                        <button class="tag-btn">Auditório</button>
+                        <button class="tag-btn">Laboratórios</button>
+                    </div>
+                </div>
+
+                <div class="building-list-group">
+                    <h3>PRÉDIOS</h3>
+                    <ul class="building-list">
+                        <li><span class="status-dot p-pd"></span> 02 - Administração</li>
+                        <li><span class="status-dot p-pd"></span> 04 - Financeiro e Corporativo</li>
+                        <li><span class="status-dot p-pd"></span> 05 - Auditório</li>
+                        <li class="active"><span class="status-dot p-lab"></span> 12 - Laboratório CFOA</li>
+                        <li><span class="status-dot p-lab"></span> L-04 - Laboratório SARS</li>
+                        <li><span class="status-dot p-generic"></span> 13 - Laboratório de Calibração</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </aside>

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // --- 1. CONFIGURAÇÃO BASE DO MAPA ---
-    const imageUrl = './img/campus_map_base.png'; // Substitua pela sua imagem quando tiver
+    const imageUrl = './img/Mapa base.svg';
     const imageW = 1920; 
     const imageH = 1080;
 
@@ -30,32 +30,72 @@ document.addEventListener('DOMContentLoaded', function() {
             id: '02',
             nome: '02 - Administração',
             setor: 'Admin',
-            pos: [350, 850],
-            cor: '#00BFA5',
-            popup: '<h3>Administração</h3><p>Prédio administrativo central do CPQD.</p>'
+            pos: [224, 732],
+            pinUrl: './img/Pin 02.svg',
+            pinHoverUrl: './img/Pin 02 hover.svg',
+            predioUrl: './img/Prédio 2.svg',
+            predioHoverUrl: './img/Prédio 02 hover.svg',
+            predioBounds: [[210, 597], [277, 750]],
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 02 - Administração</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>1º Andar</strong><br>Prédio administrativo central do CPQD (RH, Facilites, Segurança do Trabalho).</p>
+                    <hr>
+                    <p><strong>2ª andar</strong><br>Destinado a presidência e jurídico do CPQD.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: '04',
             nome: '04 - Financeiro e Corporativo',
             setor: 'Financeiro',
-            pos: [250, 980],
-            cor: '#00BFA5',
-            popup: '<h3>Financeiro</h3><p>Setor corporativo e financeiro.</p>'
+            pos: [160, 899],
+            pinUrl: './img/Pin 04.svg',
+            pinHoverUrl: './img/Pin 04 hover.svg',
+            predioUrl: './img/Prédio 4.svg',
+            predioHoverUrl: './img/Prédio 04 hover.svg',
+            predioBounds: [[337, 935], [147, 815]],
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 04 - Corporativo e Financeiro</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>Financeiro</strong><br>Prédio responsável pelo setor financeiro e comercial.</p>
+                    <hr>
+                    <p><strong>Corporativo</strong><br>Responsável por atividades do setor corporativo (DPS, DTIN, DGTIC).</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: '05',
             nome: '05 - Auditório',
             setor: 'Auditório',
-            pos: [480, 780],
-            cor: '#FDD835',
-            popup: '<h3>Auditório Principal</h3><p>Espaço para eventos e conferências.</p>'
+            pos: [459, 708],
+            pinUrl: './img/Pin 05.svg',
+            pinHoverUrl: './img/Pin 05 hover.svg',
+            predioUrl: './img/Prédio 5 - auditorio.svg',
+            predioHoverUrl: './img/Prédio 5 - hover.svg',
+            predioBounds: [[575, 726], [440, 630]],
+            popup: `
+                <div class="custom-popup-header"><h3>Auditório Principal</h3></div>
+                <div class="custom-popup-body">
+                    <p><strong>Auditório</strong><br>Sala ampla voltada a eventos corporativos, conferências e cerimônias.</p>
+                    <hr>
+                    <p><strong>Anfiteatro</strong><br>Espaço semicircular em desnível para aulas, palestras e apresentações.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: '12',
             nome: '12 - Laboratório CFOA',
             setor: 'Laboratórios',
-            pos: [450, 1250],
-            cor: '#FFA726',
+            pos: [418, 1205],
+            pinUrl: './img/Pin 12.svg',
+            pinHoverUrl: './img/Pin 12 hover.svg',
+            predioUrl: './img/Prédio 12.svg',
+            predioHoverUrl: './img/Prédio 12 hover.svg',
+            predioBounds: [[615, 1215], [400, 920]],
             popup: `
                 <div class="custom-popup-header"><h2>Prédio 12 - Laboratórios</h2></div>
                 <div class="custom-popup-body">
@@ -63,45 +103,177 @@ document.addEventListener('DOMContentLoaded', function() {
                     <hr>
                     <p><strong>LABORATÓRIOS ENSAIOS CLIMÁTICOS</strong><br>Simulação de clima para fibras ópticas.</p>
                     <button class="popup-details-btn">Ver Detalhes Completos</button>
-                </div>`
+                </div>
+            `
         },
         {
             id: 'L04',
             nome: 'L-04 - Laboratório SARS',
             setor: 'Laboratórios',
-            pos: [800, 1500],
-            cor: '#FFA726',
-            popup: '<h3>Laboratório SARS</h3><p>Pesquisa e desenvolvimento avançado.</p>'
+            pos: [820, 1480],
+            pinUrl: './img/Pin L4.svg',
+            pinHoverUrl: './img/Pin L4 hover.svg',
+            predioUrl: './img/Prédio L - 04.svg',
+            predioHoverUrl: './img/Prédio L - 04 hover.svg',
+            predioBounds: [[1000, 1500], [800, 1400]],
+            popup: `
+                <div class="custom-popup-header"><h3>Laboratório SARS</h3></div>
+                <div class="custom-popup-body">
+                    <p><strong>LABORATÓRIO DE ENSAIOS</strong><br>Realização de testes técnicos e controle de qualidade de materiais.</p>
+                    <hr>
+                    <p><strong>CERTIFICAÇÃO SARS</strong><br>Validação e conformidade com os padrões regulatórios SARS.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
         },
         {
             id: '13',
             nome: '13 - Laboratório de Calibração',
             setor: 'Laboratórios',
-            pos: [750, 700],
-            cor: '#FFA726',
-            popup: '<h3>Laboratório de Calibração</h3><p>Serviços de medição e calibração de precisão.</p>'
+            pos: [798, 595],
+            pinUrl: './img/Pin 13.svg',
+            pinHoverUrl: './img/Pin 13 hover.svg',
+            predioUrl: './img/Prédio 13.svg',
+            predioHoverUrl: './img/Prédio 13 hover.svg',
+            predioBounds: [[951, 608], [768, 447]],
+            popup: `
+                <div class="custom-popup-header"><h2>Prédio 13 - Laboratórios</h2></div>
+                <div class="custom-popup-body">
+                    <p><strong>L-13 - LABORATÓRIOS DE CALIBRAÇÃO</strong><br>Serviços de medição e calibração de precisão.</p>
+                    <hr>
+                    <p><strong>GTEM</strong><br>Calibração mediadores de radiação não ionizantes e eletromagnético.</p>
+                    <button class="popup-details-btn">Ver Detalhes Completos</button>
+                </div>
+            `
+        },
+        {
+            id: 'portaria',
+            nome: 'Portaria',
+            predioUrl: './img/Portaria.svg',
+            predioBounds: [[55, 633], [11, 723]]
+        },
+        {
+            id: 'techoa',
+            nome: 'Techoa',
+            predioUrl: './img/prédio (1).svg',
+            predioBounds: [[335, 140], [147, 815]]
+        },
+        {
+            id: 'll',
+            nome: 'Laranja Lima',
+            predioUrl: './img/prédio.svg',
+            predioBounds: [[745, 624], [610, 726]]
         }
     ];
 
     // --- 3. CRIAÇÃO DOS MARCADORES ---
     const markersGroup = {};
+    const sectorLayers = [];
 
     prediosData.forEach(p => {
-        const iconHtml = L.divIcon({
-            className: 'custom-div-icon',
-            html: `<div style="background-color: ${p.cor}; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">${p.id}</div>`,
-            iconSize: [30, 30],
-            iconAnchor: [15, 15]
+        let predioNormal = null;
+        let predioHover = null;
+
+        // 1. CARREGA AS IMAGENS DO PRÉDIO
+        if (p.predioUrl && p.predioBounds) {
+            predioNormal = L.imageOverlay(p.predioUrl, p.predioBounds, {
+                opacity: 1, 
+                interactive: false 
+            }).addTo(map);
+
+            if (p.predioHoverUrl) {
+                predioHover = L.imageOverlay(p.predioHoverUrl, p.predioBounds, {
+                    opacity: 0, 
+                    interactive: false
+                }).addTo(map);
+            }
+        }
+
+        const sectorLayer = {
+            setor: p.setor,
+            marker: null,
+            normalOverlay: predioNormal,
+            hoverOverlay: predioHover,
+            normalIcon: null
+        };
+        sectorLayers.push(sectorLayer);
+
+        // 2. CRIA O PINO E A INTERATIVIDADE APENAS SE HOUVER COORDENADA (p.pos)
+        if (p.pos) {
+            const iconNormal = L.icon({ iconUrl: p.pinUrl, iconSize: [40, 40], iconAnchor: [20, 25], popupAnchor: [0, -40] }); // Ajusta o teu anchor aqui
+            const iconHover = L.icon({ iconUrl: p.pinHoverUrl, iconSize: [40, 40], iconAnchor: [20, 25], popupAnchor: [0, -40] });
+
+            const marker = L.marker(p.pos, { icon: iconNormal }).addTo(map);
+            if (p.popup) marker.bindPopup(p.popup, { maxWidth: 320 });
+            
+            marker.on('mouseover', function() {
+                this.setIcon(iconHover);
+                if (predioNormal && p.predioHoverUrl) predioNormal.setOpacity(0); 
+                if (predioHover) predioHover.setOpacity(1);   
+            });
+            
+            marker.on('mouseout', function() {
+                if (!this.isPopupOpen()) {
+                    this.setIcon(iconNormal);
+                    if (predioNormal && p.predioHoverUrl) predioNormal.setOpacity(1); 
+                    if (predioHover) predioHover.setOpacity(0);   
+                }
+            });
+
+            marker.on('popupopen', function() {
+                this.setIcon(iconHover);
+                if (predioNormal && p.predioHoverUrl) predioNormal.setOpacity(0);
+                if (predioHover) predioHover.setOpacity(1);
+            });
+
+            marker.on('popupclose', function() {
+                this.setIcon(iconNormal);
+                if (predioNormal && p.predioHoverUrl) predioNormal.setOpacity(1);
+                if (predioHover) predioHover.setOpacity(0);
+            });
+
+            marker.setor = p.setor;
+            marker.nome = p.nome;
+            markersGroup[p.id] = marker;
+            sectorLayer.marker = marker;
+            sectorLayer.normalIcon = iconNormal;
+        }
+    });
+
+    // --- ABRIR E FECHAR O PAINEL LATERAL ---
+    const sidebar = document.querySelector('.map-sidebar');
+    const sidebarContent = document.getElementById('map-sidebar-content');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const mobileSidebarQuery = window.matchMedia('(max-width: 768px)');
+
+    if (sidebar && sidebarContent && sidebarToggle) {
+        const setSidebarCollapsed = collapsed => {
+            sidebar.classList.toggle('collapsed', collapsed);
+            sidebarToggle.setAttribute('aria-expanded', String(!collapsed));
+            sidebarToggle.setAttribute('aria-label', collapsed ? 'Abrir menu lateral' : 'Fechar menu lateral');
+            sidebarContent.toggleAttribute('inert', collapsed);
+            sidebarContent.setAttribute('aria-hidden', String(collapsed));
+        };
+
+        sidebar.addEventListener('transitionend', function(event) {
+            if (event.target === sidebar && event.propertyName === 'transform') {
+                map.invalidateSize({ pan: false });
+            }
         });
 
-        const marker = L.marker(p.pos, { icon: iconHtml }).addTo(map);
-        marker.bindPopup(p.popup, { maxWidth: 320 });
-        
-        marker.setor = p.setor;
-        marker.nome = p.nome;
+        sidebarToggle.addEventListener('click', function() {
+            setSidebarCollapsed(!sidebar.classList.contains('collapsed'));
+        });
 
-        markersGroup[p.id] = marker;
-    });
+        const handleMobileSidebarChange = event => setSidebarCollapsed(event.matches);
+        if (mobileSidebarQuery.addEventListener) {
+            mobileSidebarQuery.addEventListener('change', handleMobileSidebarChange);
+        } else {
+            mobileSidebarQuery.addListener(handleMobileSidebarChange);
+        }
+
+        setSidebarCollapsed(mobileSidebarQuery.matches);
+    }
 
     // --- 4. INTERAÇÃO COM A LISTA LATERAL ---
     const listItems = document.querySelectorAll('.building-list li');
@@ -132,11 +304,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const categoria = this.innerText.trim();
 
-            Object.values(markersGroup).forEach(marker => {
-                if (categoria === 'Todos' || marker.setor === categoria) {
-                    map.addLayer(marker);
-                } else {
-                    map.removeLayer(marker);
+            sectorLayers.forEach(layer => {
+                // Overlays sem setor continuam com o comportamento atual: sempre visíveis.
+                if (!layer.setor) return;
+
+                const deveExibir = categoria === 'Todos' || layer.setor === categoria;
+
+                if (layer.marker) {
+                    if (!deveExibir && layer.marker.isPopupOpen()) {
+                        layer.marker.closePopup();
+                    }
+                    if (layer.normalIcon) layer.marker.setIcon(layer.normalIcon);
+                    if (deveExibir) {
+                        map.addLayer(layer.marker);
+                    } else {
+                        map.removeLayer(layer.marker);
+                    }
+                }
+
+                if (layer.normalOverlay) {
+                    layer.normalOverlay.setOpacity(1);
+                    if (deveExibir) {
+                        map.addLayer(layer.normalOverlay);
+                    } else {
+                        map.removeLayer(layer.normalOverlay);
+                    }
+                }
+
+                if (layer.hoverOverlay) {
+                    layer.hoverOverlay.setOpacity(0);
+                    if (deveExibir) {
+                        map.addLayer(layer.hoverOverlay);
+                    } else {
+                        map.removeLayer(layer.hoverOverlay);
+                    }
                 }
             });
         });
@@ -194,6 +395,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetBtn = document.getElementById('reset-map-btn');
     if (resetBtn) {
         resetBtn.addEventListener('click', function() {
+            map.closePopup();       // fecha qualquer popup aberto
             map.fitBounds(bounds);
         });
     }
